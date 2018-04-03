@@ -101,6 +101,8 @@ class myClient extends DBF.Client {
         });
         
         conn.connect(function(err) {
+            if(err)
+                return console.log(err);
             loadUsersDB(conn, client).then(conn => {
                 console.log("Successfully loaded " + client.users.size + " users.");
             }).finally(() => {
@@ -118,6 +120,8 @@ class myClient extends DBF.Client {
         });
 
         conn.connect(function(err) {
+            if(err)
+                return console.log(err);
             loadUser(conn, user).catch(err => {
                 console.log("Error loading user " + user.username + ".\n" + err);
             }).finally(() => {
@@ -133,6 +137,8 @@ class myClient extends DBF.Client {
             password: this.auth.password
         });
         conn.connect(function (err) {
+            if(err)
+                return console.log(err);
             loadPrefixes(conn, client).then(conn => {
                 console.log("Successfully loaded prefixes for " + client.guilds.size + " servers!");
                     loadDisabledCommands(conn, client).then(conn => {
