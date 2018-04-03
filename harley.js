@@ -79,7 +79,7 @@ snekfetch.get("http://"+auth.webserver+"/servers/register?pw=" + auth.password +
             /*
                 load guild prefixes, default roles, disabled commands, and greetings/farewells.
             */
-            //bot.loadGuilds(bot);
+            bot.loadGuilds(bot);
             bot.loadUsers(bot);
             bot.sendStatus(false,true);
             /*
