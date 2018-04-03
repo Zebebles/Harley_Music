@@ -1,8 +1,8 @@
 {
-  "name": "Mildred",
+  "name": "Harley-Music",
   "version": "1.0.0",
-  "description": "Does Cool Stuff",
-  "main": "bot.js",
+  "description": "Harley but music.",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
