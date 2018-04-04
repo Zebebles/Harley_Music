@@ -50,11 +50,11 @@ snekfetch.get("http://"+auth.webserver+"/servers/register?pw=" + auth.password +
         /*
             Authorise the soundcloud API
         */
-        SC.init({
-            id: auth.scID,
-            secret: auth.scSecret,
-            uri: 'http://soundcloud.com',
-        });
+        // SC.init({
+        //     id: auth.scID,
+        //     secret: auth.scSecret,
+        //     uri: 'http://soundcloud.com',
+        // });
 
         /*
             Catch missing permission events
