@@ -79,7 +79,7 @@ snekfetch.get("http://"+auth.webserver+"/servers/register?pw=" + auth.password +
             /*
                 load guild prefixes, default roles, disabled commands, and greetings/farewells.
             */
-            bot.loadGuilds(bot);
+            bot.loadGuilds(bot.guilds.array()).then(() => console.log("Loaded guilds from DB"));
             bot.loadUsers(bot);
             bot.sendStatus(false,true);
             /*
@@ -192,14 +192,17 @@ snekfetch.get("http://"+auth.webserver+"/servers/register?pw=" + auth.password +
         {
             if(!req.query.id)
                 return res.sendStatus(400);
-            
-            bot.loadGuilds();
+            let guild = bot.guilds.get(req.query.id);
+            if(!guild)
+                return res.sendStatus(404);
+            bot.loadGuilds([guild]);
             res.sendStatus(200);
         });
 
+
         bot.express.get("/loadGuilds", function(req,res)
         {
-            bot.loadGuilds();
+            bot.loadGuilds(bot.guilds.array());
             res.sendStatus(200);
         })
     }).catch(err => console.log("Error getting authentication\n"+err))

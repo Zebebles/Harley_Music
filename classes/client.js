@@ -130,7 +130,7 @@ class myClient extends DBF.Client {
         });
     }
     
-    loadGuilds(client) {
+    loadGuilds(guilds) {
         var conn = mysql.createConnection({
             host: this.auth.webserver.split(":")[0],
             user: "root",
@@ -139,19 +139,16 @@ class myClient extends DBF.Client {
         conn.connect(function (err) {
             if(err)
                 return console.log(err);
-            loadPrefixes(conn, client).then(conn => {
-                console.log("Successfully loaded prefixes for " + client.guilds.size + " servers!");
-                    loadDisabledCommands(conn, client).then(conn => {
-                        console.log("Successfully loaded disabled commands for " + client.guilds.size + " servers!");
+            loadPrefixes(conn, guilds).then(conn => {
+                    loadDisabledCommands(conn, guilds).then(conn => {
                         conn.end();
                     }).catch(err => {
-                        console.log("Error: " + err);
                         conn.end();
                     });
             }).catch(err => console.log(err)); //catch loadPrefixes
         });
 
-        client.guilds.forEach(guild => {
+        guilds.forEach(guild => {
             guild.defaultTextChannel = this.getDefaultChannel(guild);
         });
     }

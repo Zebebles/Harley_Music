@@ -2,12 +2,11 @@ const mysql = require("mysql");
 var Promise = require("bluebird");
 module.exports = function () {
 
-    this.loadPrefixes = function (conn, client) {
-        let updateGuildPrefix = this.updateGuildPrefix;
+    this.loadPrefixes = function (conn, guilds) {
         return new Promise(function (resolve, reject) {
             conn.query("use Guilds", (err, res) => {
                 if (err) return reject(err);
-                client.guilds.forEach(guild => {
+                guilds.forEach(guild => {
                     conn.query("SELECT * FROM Guilds WHERE id = " + guild.id + " LIMIT 1;", (err, res) => {
                         if (err) return reject(err);
                         if (res.length != 0)
@@ -17,7 +16,7 @@ module.exports = function () {
                                 if (res.length != 0)
                                     guild.prefix = res[0].prefix;
                             });
-                        if (guild.id == client.guilds.array()[client.guilds.size - 1].id)
+                        if (guild.id == guilds[guilds.length - 1].id)
                             resolve(conn);
                     });
                 });
@@ -25,12 +24,12 @@ module.exports = function () {
         });
     }
 
-    this.loadDisabledCommands = function (conn,client) {
+    this.loadDisabledCommands = function (conn,guilds) {
         return new Promise((resolve, reject) => {
             conn.query("Use Guilds", (err, res) => {
                 if (err)
                     return reject(err);
-                client.guilds.forEach(guild => {
+                guilds.forEach(guild => {
                     conn.query("SELECT * FROM DisabledCommands WHERE guildId = " + guild.id, (err, res) => {
                         if (err)
                             return reject(err);
@@ -43,7 +42,7 @@ module.exports = function () {
                                 guild.channels.get(result.channelId).disabledCommands.push(result.command);
                         });
                     });
-                    if (guild.id == client.guilds.array()[client.guilds.size - 1].id) {
+                    if (guild.id == guilds[guilds.length - 1].id) {
                         setTimeout(() => {
                             resolve(conn);
                         }, 1);
