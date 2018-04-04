@@ -1,7 +1,6 @@
 const myClient = require("./classes/client.js");
 let auth = require("./resources/auth.json");
 const Playlist = require("./classes/playlist.js");
-const SC = require("node-soundcloud");
 const spotify = require("spotify-web-api-node");
 let snekfetch = require("snekfetch");
 const fs = require('fs');
@@ -46,15 +45,6 @@ snekfetch.get("http://"+auth.webserver+"/servers/register?pw=" + auth.password +
         });
 
         bot.express.listen(3005);
-
-        /*
-            Authorise the soundcloud API
-        */
-        // SC.init({
-        //     id: auth.scID,
-        //     secret: auth.scSecret,
-        //     uri: 'http://soundcloud.com',
-        // });
 
         /*
             Catch missing permission events
