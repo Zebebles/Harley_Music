@@ -45,7 +45,7 @@ module.exports = class Video{
                             stream.on("response", () => resolve(stream));
                         }catch(err)
                         {
-                            resolve(err); //should just make it skip the song
+                            reject(err); //should just make it skip the song
                         }
                     break;
                     case "soundcloud":
