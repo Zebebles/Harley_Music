@@ -200,7 +200,7 @@ module.exports = class Hello extends DBF.Command{
                                     return reject({err:"No songs were queued.", reason:"Unable to queue any tracks."});
                                 resolve({title: playlistInfo.snippet.title, tracks: msg.guild.playlist.queue.length-originalN});
                             });
-                        });
+                        }).catch(err => reject(err, "Couldn't find that playlist."));
                     }).catch(err => reject(err, "Error getting playlist from YouTube."));
                 });
             }).then( (playlistInfo) => {
