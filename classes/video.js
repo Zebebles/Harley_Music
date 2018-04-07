@@ -34,8 +34,9 @@ module.exports = class Video{
                 stream = this.type == "youtube" 
                                 ? (this.duration ? ytdl(this.link,{quality: [250,171,139,18]}) : ytdl(this.link,{quality: 91}))
                                 : (this.type == "soundcloud" ? req(this.link + "?client_id=" + auth.scID) : null);
-                
-                if(stream)
+                if(stream instanceof Error)
+                    reject(stream);
+                else if(stream)
                 {
                     stream.on('error', () => reject(err));
                     stream.on("response", () => resolve(stream));
