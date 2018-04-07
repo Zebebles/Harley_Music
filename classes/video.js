@@ -42,7 +42,10 @@ module.exports = class Video{
             finally
             {
                 if(stream)
+                {
+                    stream.on('error', err => reject(err));
                     stream.on("response", () => resolve(stream));
+                }
                 else
                     reject("Not youtube or soundclud");
             }
