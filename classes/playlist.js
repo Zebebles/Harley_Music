@@ -180,7 +180,7 @@ module.exports = class Playlist{
         var embed = new Discord.RichEmbed();
         if(!this.textChannel || !this.guild.channels.find(ch => ch.id == this.textChannel.id))
             this.textChannel = this.guild.defaultTextChannel;
-        embed.setColor(this.textChannel.guild.me.displayColor);            
+        embed.setColor(this.guild.me.displayColor);            
         if(!reason){
             if(this.paused)
                 embed.setTitle(":pause_button: " + this.queue[0].title);
