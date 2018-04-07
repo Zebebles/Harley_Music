@@ -176,7 +176,11 @@ module.exports = class Playlist{
                     this.playNext();
                 }
             });
-        }).catch(err => console.log(err));
+        }).catch(err => 
+        {
+            delete this.queue.splice(0,1);
+            this.playNext();
+        });
     }
 
     updateMessage(reason){

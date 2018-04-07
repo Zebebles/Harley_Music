@@ -35,7 +35,6 @@ module.exports = class Video{
                     try
                     {
                         stream = this.duration ? ytdl(this.link,{quality: [250,171,139]}) : ytdl(this.link,{quality: 91});
-                        throw Error("hi");
                     }
                     catch(err)
                     {
