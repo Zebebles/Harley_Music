@@ -42,6 +42,7 @@ module.exports = class Video{
 
                             stream.on("response", () => {
                                 resolve(stream);
+                                stream.removeListener('response');
                             });
                         }catch(err)
                         {
