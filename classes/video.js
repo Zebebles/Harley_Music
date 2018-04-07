@@ -31,23 +31,18 @@ module.exports = class Video{
         return new Promise((resolve, reject) => {
             switch(this.type){
                 case "youtube":
+                    let stream;
                     try
                     {
-                        let stream;
-                        if(this.duration > 0)
-                            stream = ytdl(this.link,{quality: [250,171,139]}); //250 is 64kbps 
-                        else
-                             stream = ytdl(this.link,{quality: 91}); //can't just get audio for streams so get shittiest quality (48kbps and 144p) 
-
-                        const doResolve = function() {
-                            stream.removeListener('response', doResolve);
-                            resolve(stream);
-                        }
-
-                        stream.on("response", doResolve);
-                    }catch(err)
+                        stream = this.duration ? ytdl(this.link,{quality: [250,171,139]}) : ytdl(this.link,{quality: 91});
+                    }
+                    catch(err)
                     {
                         reject(err); //should just make it skip the song
+                    }
+                    finally
+                    {
+                        stream.on("response", () => resolve(stream));
                     }
                 break;
                 case "soundcloud":
