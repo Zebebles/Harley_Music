@@ -20,7 +20,7 @@ module.exports = class Playlist{
         }
         if(this.guild.voiceConnection)
             this.guild.voiceConnection.disconnect();
-
+        
         this.queue = [];
         this.paused = false;
         this.auto = false;
@@ -117,7 +117,7 @@ module.exports = class Playlist{
             else
                 this.Play();
         }).catch(err => {
-            this.queue.splice(0,1);
+            delete this.queue.splice(0,1);
             this.playNext();
         });
     }
@@ -161,15 +161,15 @@ module.exports = class Playlist{
                         if(this.dontRelate.length > 5)
                             this.dontRelate.splice(0,1);
                         this.queue.push(new Video(song, auth));
-                        this.queue.splice(0,1);
+                        delete this.queue.splice(0,1);
                         this.playNext();
                     }).catch(err => {
                         if(err != "Not youtube") console.log(err);
-                        this.queue.splice(0,1);
+                        delete this.queue.splice(0,1);
                         this.playNext();
                     });
                 else{
-                    this.queue.splice(0,1); //get rid of the lastsong                
+                    delete this.queue.splice(0,1); //get rid of the lastsong                
                     this.playNext();
                 }
             });

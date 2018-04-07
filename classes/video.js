@@ -30,26 +30,26 @@ module.exports = class Video{
     getStream(){
         return new Promise((resolve, reject) => {
             this.validate().then(() => {
-                let stream;
                 switch(this.type){
                     case "youtube":
                         try
                         {
+                            let stream;
                             if(this.duration > 0)
-                            {
-                                stream = ytdl(this.link,{filter: "audioonly", quality: [250,171,140]}); //250 is 64kbps 
-                            }
+                                stream = ytdl(this.link,{quality: [250,171,139]}); //250 is 64kbps 
                             else
-                                stream = ytdl(this.link,{filter: "audio", quality: 91}); //can't just get audio for streams so get shittiest quality (48kbps and 144p) 
-                            
-                            stream.on("response", () => resolve(stream));
+                                stream = ytdl(this.link,{quality: 91}); //can't just get audio for streams so get shittiest quality (48kbps and 144p) 
+
+                            stream.on("response", () => {
+                                resolve(stream);
+                            });
                         }catch(err)
                         {
                             reject(err); //should just make it skip the song
                         }
                     break;
                     case "soundcloud":
-                        stream = req(this.link + "?client_id=" + auth.scID).on("response", (response) => resolve(response));
+                        req(this.link + "?client_id=" + auth.scID).on("response", (response) => resolve(response));
                     break;
                     default:
                         reject("Not youtube or soundcloud");

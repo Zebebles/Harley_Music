@@ -33,7 +33,7 @@ module.exports = class Hello extends DBF.Command{
         else if(isNaN(parseInt(args))) incrementN = 0;
         else incrementN = parseInt(args)-1;
         if(incrementN > 0) msg.channel.send(`:track_next: Skipping \`${incrementN+1}\` tracks as requested by **${msg.member.displayName}**`).catch(err => console.log(err));
-        msg.guild.playlist.queue.splice(0,incrementN);
+        delete msg.guild.playlist.queue.splice(0,incrementN);
         let disp = channel.dispatcher;
         if(disp)
             disp.end();
