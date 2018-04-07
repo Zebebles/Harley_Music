@@ -29,36 +29,34 @@ module.exports = class Video{
 
     getStream(){
         return new Promise((resolve, reject) => {
-            this.validate().then(() => {
-                switch(this.type){
-                    case "youtube":
-                        try
-                        {
-                            let stream;
-                            if(this.duration > 0)
-                                stream = ytdl(this.link,{quality: [250,171,139]}); //250 is 64kbps 
-                            else
-                                stream = ytdl(this.link,{quality: 91}); //can't just get audio for streams so get shittiest quality (48kbps and 144p) 
+            switch(this.type){
+                case "youtube":
+                    try
+                    {
+                        let stream;
+                        if(this.duration > 0)
+                            stream = ytdl(this.link,{quality: [250,171,139]}); //250 is 64kbps 
+                        else
+                             stream = ytdl(this.link,{quality: 91}); //can't just get audio for streams so get shittiest quality (48kbps and 144p) 
 
-                            const doResolve = function() {
-                                stream.removeListener('response', doResolve);
-                                resolve(stream);
-                            }
-
-                            stream.on("response", doResolve);
-                        }catch(err)
-                        {
-                            reject(err); //should just make it skip the song
+                        const doResolve = function() {
+                            stream.removeListener('response', doResolve);
+                            resolve(stream);
                         }
-                    break;
-                    case "soundcloud":
-                        req(this.link + "?client_id=" + auth.scID).on("response", (response) => resolve(response));
-                    break;
-                    default:
-                        reject("Not youtube or soundcloud");
-                }
-            }).catch(err => reject(err));
-        })
+
+                        stream.on("response", doResolve);
+                    }catch(err)
+                    {
+                        reject(err); //should just make it skip the song
+                    }
+                break;
+                case "soundcloud":
+                    req(this.link + "?client_id=" + auth.scID).on("response", (response) => resolve(response));
+                break;
+                default:
+                    reject("Not youtube or soundcloud");
+            }
+        });
     }
 
     validate(){

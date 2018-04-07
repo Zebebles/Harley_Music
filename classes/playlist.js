@@ -107,10 +107,12 @@ module.exports = class Playlist{
                     {
                         this.Play();
                     }).catch(err => {
+                        this.updateMessage("Voice connection error.");
                         this.init();
                     });
                 }else
                 {
+                    this.updateMessage("Voice connection error.")
                     this.init();
                 }
             }
@@ -129,6 +131,7 @@ module.exports = class Playlist{
             
             if(!this.textChannel.guild.voiceConnection)
             {
+                this.updateMessage("Voice connection error.")
                 return this.init();
             }
             var dispatcher = this.textChannel.guild.voiceConnection.playStream(
@@ -149,6 +152,7 @@ module.exports = class Playlist{
                     },(this.queue[0].duration*1000) - (25+this.queue[0].startTime));
                 }
             }).on("end", reason => {
+                delete dispatcher;
                 if(reason == "dont" || this.queue.length == 0)
                     return;
                 if(reason != "seek" && this.queue.length > 0){
