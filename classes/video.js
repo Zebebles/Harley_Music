@@ -40,7 +40,7 @@ module.exports = class Video{
                             else
                                 stream = ytdl(this.link,{quality: 91}); //can't just get audio for streams so get shittiest quality (48kbps and 144p) 
 
-                            const doResolve = () => {
+                            const doResolve = function() {
                                 stream.removeListener(this);
                                 resolve(stream);
                             }
