@@ -37,6 +37,7 @@ module.exports = class Video{
                 
                 if(stream)
                 {
+                    stream.on('error', () => reject(err));
                     stream.on("response", () => resolve(stream));
                 }
                 else
