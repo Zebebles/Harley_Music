@@ -40,10 +40,9 @@ module.exports = class Video{
                             else
                                 stream = ytdl(this.link,{quality: 91}); //can't just get audio for streams so get shittiest quality (48kbps and 144p) 
 
-                            stream.on("response", () => {
-                                resolve(stream);
-                                stream.removeListener('response');
-                            });
+                            const doResolve = stream => resolve(stream);
+                            stream.on("response", doresolve);
+                            stream.removeListener('response', doresolve);
                         }catch(err)
                         {
                             reject(err); //should just make it skip the song
