@@ -29,27 +29,21 @@ module.exports = class Video{
 
     getStream(){
         return new Promise((resolve, reject) => {
-            switch(this.type){
-                case "youtube":
-                    let stream;
-                    try
-                    {
-                        stream = this.duration ? ytdl(this.link,{quality: [250,171,139]}) : ytdl(this.link,{quality: 91});
-                    }
-                    catch(err)
-                    {
-                        reject(err); //should just make it skip the song
-                    }
-                    finally
-                    {
-                        stream.on("response", () => resolve(stream));
-                    }
-                break;
-                case "soundcloud":
-                    req(this.link + "?client_id=" + auth.scID).on("response", (response) => resolve(response));
-                break;
-                default:
-                    reject("Not youtube or soundcloud");
+            try{
+                stream = this.type == "youtube" 
+                                ? (this.duration ? ytdl(this.link,{quality: [250,171,139]}) : ytdl(this.link,{quality: 91}))
+                                : (this.type == "soundcloud" ? req(this.link + "?client_id=" + auth.scID) : null);
+            }
+            catch(err)
+            {
+                reject(err); //should just make it skip the song
+            }
+            finally
+            {
+                if(stream)
+                    stream.on("response", () => resolve(stream));
+                else
+                    reject("Not youtube or soundclud");
             }
         });
     }
