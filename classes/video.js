@@ -29,6 +29,7 @@ module.exports = class Video{
 
     getStream(){
         return new Promise((resolve, reject) => {
+            let stream;
             try{
                 stream = this.type == "youtube" 
                                 ? (this.duration ? ytdl(this.link,{quality: [250,171,139]}) : ytdl(this.link,{quality: 91}))
