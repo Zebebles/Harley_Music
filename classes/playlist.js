@@ -23,6 +23,7 @@ module.exports = class Playlist{
 
         this.queue = [];
         this.paused = false;
+        this.auto = false;
         this.dontRelate = [];
         if(this.message && this.message.collector && !this.message.collector.ended)
             this.message.collector.stop();
