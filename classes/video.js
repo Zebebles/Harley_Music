@@ -34,20 +34,17 @@ module.exports = class Video{
                 stream = this.type == "youtube" 
                                 ? (this.duration ? ytdl(this.link,{quality: [250,171,139]}) : ytdl(this.link,{quality: 91}))
                                 : (this.type == "soundcloud" ? req(this.link + "?client_id=" + auth.scID) : null);
-            }
-            catch(err)
-            {
-                reject(err); //should just make it skip the song
-            }
-            finally
-            {
+                
                 if(stream)
                 {
-                    stream.on('error', err => reject(err));
                     stream.on("response", () => resolve(stream));
                 }
                 else
                     reject("Not youtube or soundclud");
+            }
+            catch(err)
+            {
+                reject(err); //should just make it skip the song
             }
         });
     }
