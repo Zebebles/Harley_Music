@@ -30,7 +30,7 @@ module.exports = class Hello extends DBF.Command{
         ytas = new yta(msg.client.auth.googleKey);
         let channel = msg.member.voiceChannel;
         if((!args || args == "") && !msg.guild.playlist.paused) 
-            return msg.channel.send("**Usage:**\t`" + msg.client.prefix + "play <url, song name, or lyrics> -first (optional) -choose (optional)`").catch(err => console.log(err));
+            return msg.channel.send("**Usage:**\t`" + msg.guild.prefix + "play <url, song name, or lyrics> -first (optional) -choose (optional)`").catch(err => console.log(err));
         else if((!args || args == "") && msg.guild.playlist.paused) 
             return msg.client.commands.find(cmd => cmd.areYou("pause")).run(params);
         if(!msg.member.voiceChannel) 
