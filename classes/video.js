@@ -38,8 +38,19 @@ module.exports = class Video{
                     reject(stream);
                 else if(stream)
                 {
-                    stream.on('error', (err) => reject(err));
+                    const doResolve = () => {
+                        stream.removeCollector('response', doResolve);
+                        stream.removeCollector('error', doReject);
+                        resolve(stream);
+                    }
                     stream.on("response", () => resolve(stream));
+
+                    const doReject = (err) => {
+                        stream.removeCollector('response', doResolve);
+                        stream.removeCollector('error', doReject);
+                        reject(err);
+                    }
+                    stream.on('error', (err) => reject(err));
                 }
                 else
                     reject("Not youtube or soundclud");
