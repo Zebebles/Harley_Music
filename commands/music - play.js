@@ -166,7 +166,7 @@ module.exports = class Hello extends DBF.Command{
                     msg.channel.send("", {embed: {title: "⚠ Error queuing YouTube track.", color: 16106519, description: "**Reason:** " + err.reason}})
                         .then(m => msg.guild.playlist.qmessage = null)
                         .catch(err => console.log(err)); //delete the "searching for" messaging
-                if(err != "Not donator")
+                if(err.err != "Not donator")
                     console.log("Error queing YouTube song in " + msg.guild.name + "\n" + err.err + "\n" + err);
             }).finally(() => msg.guild.playlist.qing = false) //let people play music again.
         }
