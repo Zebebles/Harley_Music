@@ -260,6 +260,8 @@ module.exports = class Playlist{
     sendQueueMessage(msg, song){
         var embed = new Discord.RichEmbed();
         embed.addField("Name", song.title);
+        if(!msg.guild.me)
+            return;
         embed.setColor(msg.guild.me.displayColor);
         if(song.type == "spotify" && !song.image)
             embed.setThumbnail("http://www.stickpng.com/assets/images/59b5bb466dbe923c39853e00.png");
