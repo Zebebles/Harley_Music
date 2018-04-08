@@ -32,7 +32,7 @@ module.exports = class Video{
             let stream;
             try{
                 stream = this.type == "youtube" 
-                                ? (this.duration ? ytdl(this.link,{quality: [250,171,139,18]}) : ytdl(this.link,{quality: 91}))
+                                ? (this.duration ? ytdl(this.link,{quality: [250,171,139,18]}) : ytdl(this.link,{quality: "lowest"}))
                                 : (this.type == "soundcloud" ? req(this.link + "?client_id=" + auth.scID) : null);
                 if(stream instanceof Error)
                     reject(stream);
