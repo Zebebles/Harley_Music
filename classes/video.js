@@ -39,15 +39,15 @@ module.exports = class Video{
                 else if(stream)
                 {
                     const doResolve = () => {
-                        stream.removeCollector('response', doResolve);
-                        stream.removeCollector('error', doReject);
+                        stream.removeListener('response', doResolve);
+                        stream.removeListener('error', doReject);
                         resolve(stream);
                     }
                     stream.on("response",doResolve);
 
                     const doReject = (err) => {
-                        stream.removeCollector('response', doResolve);
-                        stream.removeCollector('error', doReject);
+                        stream.removeListener('response', doResolve);
+                        stream.removeListener('error', doReject);
                         reject(err);
                     }
                     stream.on('error', doReject);
