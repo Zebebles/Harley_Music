@@ -88,7 +88,7 @@ module.exports = class Video{
     convert(){
         return new Promise((resolve, reject) => {
             if(this.type == "spotify")
-                snekfetch.get('https://www.googleapis.com/youtube/v3/search?part=snippet&key=' + auth.googleKey + '&maxResults=10&q=' + this.title).then(body =>{
+                snekfetch.get('https://www.googleapis.com/youtube/v3/search?part=snippet&key=' + auth.googleKey + '&maxResults=10&q=' + encodeURIComponent(this.title)).then(body =>{
                     let result = JSON.parse(body.text).items.find(track => track.id.kind == "youtube#video");
                     if(!result)
                         reject(err);
