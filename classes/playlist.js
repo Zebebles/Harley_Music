@@ -50,6 +50,8 @@ module.exports = class Playlist{
         this.paused = false;        
         if(this.queue.length == 0){
             this.updateMessage("Ran of out songs to play.");
+            if(!this.guild.voiceConnection)
+                return;
             this.guild.voiceConnection.disconnect();            
             this.guild.client.voiceConnections.forEach(conn => {
                 let done = false;
