@@ -167,7 +167,7 @@ module.exports = class Hello extends DBF.Command{
                         {
                             msg.guild.playlist.queue.splice(0,0,msg.guild.playlist.queue[0]);
                             msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
-                            msg.guid.playlist.queue.splice(0,1);
+                            msg.guild.playlist.queue.splice(0,1);
                         }
                         msg.guild.playlist.playNext();
                     }).catch(err => console.log(err));
@@ -227,7 +227,7 @@ module.exports = class Hello extends DBF.Command{
                         {
                             msg.guild.playlist.queue.splice(0,0,msg.guild.playlist.queue[0]);
                             msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
-                            msg.guid.playlist.queue.splice(0,1);
+                            msg.guild.playlist.queue.splice(0,1);
                         }
                         msg.guild.playlist.playNext();
                     }).catch(err => console.log(err));
@@ -304,7 +304,7 @@ module.exports = class Hello extends DBF.Command{
                         {
                             msg.guild.playlist.queue.splice(0,0,msg.guild.playlist.queue[0]);
                             msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
-                            msg.guid.playlist.queue.splice(0,1);
+                            msg.guild.playlist.queue.splice(0,1);
                         }
                         msg.guild.playlist.playNext();
                     }).catch(err => console.log(err));
@@ -359,7 +359,7 @@ module.exports = class Hello extends DBF.Command{
                         {
                             msg.guild.playlist.queue.splice(0,0,msg.guild.playlist.queue[0]);
                             msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
-                            msg.guid.playlist.queue.splice(0,1);
+                            msg.guild.playlist.queue.splice(0,1);
                         }
                         msg.guild.playlist.playNext();
                     }).catch(err => console.log(err));
@@ -469,7 +469,7 @@ module.exports = class Hello extends DBF.Command{
                         {
                             msg.guild.playlist.queue.splice(0,0,msg.guild.playlist.queue[0]);
                             msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
-                            msg.guid.playlist.queue.splice(0,1);
+                            msg.guild.playlist.queue.splice(0,1);
                         }
                         msg.guild.playlist.playNext();
                     }).catch(err => console.log(err));
