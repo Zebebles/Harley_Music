@@ -18,7 +18,7 @@ module.exports = class Hello extends DBF.Command{
              group: "Music",
              ownerOnly : false,
              description: "Plays a YouTube, Spotify, or Soundcloud song/playlist in the voice channel. -next will add the song to the top of the queue. -choose will let you choose 1 of the first 5 search results.",
-             example: ">>play song_name or url (-choose) (-next)\n>>play never gonna give you up (-next)(-choose)\n>>play youtube_url (-next)\n>>play spotify_url (-next)\n>>play soundcloud_url (-next)",             
+             example: ">>play song_name or url (-choose) (-shuffle) (-next)\n>>play never gonna give you up (-next)  (-shuffle) (-choose)\n>>play youtube_url (-next) (-shuffle) \n>>play spotify_url (-next) (-shuffle) \n>>play soundcloud_url  (-shuffle) (-next)",             
              guildOnly : true,
              reqArgs: true,
              reqBotPerms : ["CONNECT", "SPEAK", "EMBED_LINKS", "MANAGE_MESSAGES"]
@@ -55,6 +55,12 @@ module.exports = class Hello extends DBF.Command{
         if(args.match(/-(\s*)?(choose|pick)/gi)){
             choose = true;
             args = args.replace(/-(\s*)?(choose|pick)/gi, "");            
+        }
+
+        let shuffle = false;
+        if(args.match(/-(\s*)?(shuffle)/gi)){
+            shuffle = true;
+            args = args.replace(/-(\s*)?(shuffle)/gi, "");            
         }
 
         let position = msg.channel.guild.playlist.queue.length;
@@ -155,6 +161,8 @@ module.exports = class Hello extends DBF.Command{
             }).then(song => {
                 msg.guild.playlist.addSong(song, playNext); //add the song to the playlist
                 msg.guild.playlist.sendQueueMessage(msg, song); //send the "song is queued message"
+                if(shuffle)
+                    msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
                 if(!msg.guild.voiceConnection) //join the channel and play first song if it's the first one in the queue
                     channel.join().then(conn => msg.guild.playlist.playNext()).catch(err => console.log(err));
             }).catch(err => { //handle any errors
@@ -205,6 +213,8 @@ module.exports = class Hello extends DBF.Command{
                 });
             }).then( (playlistInfo) => {
                 msg.guild.playlist.sendQueueMessage(msg, playlistInfo);
+                if(shuffle)
+                    msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
                 if(!msg.guild.voiceConnection)
                     channel.join().then(conn => msg.guild.playlist.playNext()).catch(err => console.log(err));
             }).catch( err => {
@@ -272,6 +282,8 @@ module.exports = class Hello extends DBF.Command{
             }).then(song => {
                 msg.guild.playlist.addSong(song, playNext); //add the song to the playlist
                 msg.guild.playlist.sendQueueMessage(msg, song); //send the "song is queued message"
+                if(shuffle)
+                    msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
                 if(!msg.guild.voiceConnection)
                     channel.join().then(conn => msg.guild.playlist.playNext()).catch(err => console.log(err));;
             }).catch(err => { //handle any errors
@@ -317,6 +329,8 @@ module.exports = class Hello extends DBF.Command{
                 }).catch(err => reject(err));
             }).then( (playlistInfo) => {
                 msg.guild.playlist.sendQueueMessage(msg, playlistInfo);
+                if(shuffle)
+                    msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
                 if(!msg.guild.voiceConnection)
                     channel.join().then(conn => msg.guild.playlist.playNext()).catch(err => console.log(err));
             }).catch( err => {
@@ -417,6 +431,8 @@ module.exports = class Hello extends DBF.Command{
                 }
             }).then(song => { //the .then takes care of sending the queued message and joining the channel.
                 msg.guild.playlist.sendQueueMessage(msg, song);
+                if(shuffle)
+                    msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
                 if(!msg.guild.voiceConnection) //join the channel and play first song if it's the first one in the queue
                     channel.join().then(conn => msg.guild.playlist.playNext());
             }).catch(err => { //takes care of any errors that might've happened
