@@ -163,7 +163,12 @@ module.exports = class Hello extends DBF.Command{
                 msg.guild.playlist.sendQueueMessage(msg, song); //send the "song is queued message"
                 if(!msg.guild.voiceConnection) //join the channel and play first song if it's the first one in the queue
                     channel.join().then(conn => {
-                        msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                        if(shuffle)
+                        {
+                            msg.guild.playlist.queue.splice(0,0,msg.guild.playlist.queue[0]);
+                            msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                            msg.guid.playlist.queue.splice(0,1);
+                        }
                         msg.guild.playlist.playNext();
                     }).catch(err => console.log(err));
                 else if(shuffle)
@@ -218,7 +223,12 @@ module.exports = class Hello extends DBF.Command{
                 msg.guild.playlist.sendQueueMessage(msg, playlistInfo);
                 if(!msg.guild.voiceConnection) //join the channel and play first song if it's the first one in the queue
                     channel.join().then(conn => {
-                        msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                        if(shuffle)
+                        {
+                            msg.guild.playlist.queue.splice(0,0,msg.guild.playlist.queue[0]);
+                            msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                            msg.guid.playlist.queue.splice(0,1);
+                        }
                         msg.guild.playlist.playNext();
                     }).catch(err => console.log(err));
                 else if(shuffle)
@@ -290,7 +300,12 @@ module.exports = class Hello extends DBF.Command{
                 msg.guild.playlist.sendQueueMessage(msg, song); //send the "song is queued message"
                 if(!msg.guild.voiceConnection) //join the channel and play first song if it's the first one in the queue
                     channel.join().then(conn => {
-                        msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                        if(shuffle)
+                        {
+                            msg.guild.playlist.queue.splice(0,0,msg.guild.playlist.queue[0]);
+                            msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                            msg.guid.playlist.queue.splice(0,1);
+                        }
                         msg.guild.playlist.playNext();
                     }).catch(err => console.log(err));
                 else if(shuffle)
@@ -340,7 +355,12 @@ module.exports = class Hello extends DBF.Command{
                 msg.guild.playlist.sendQueueMessage(msg, playlistInfo);
                 if(!msg.guild.voiceConnection) //join the channel and play first song if it's the first one in the queue
                     channel.join().then(conn => {
-                        msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                        if(shuffle)
+                        {
+                            msg.guild.playlist.queue.splice(0,0,msg.guild.playlist.queue[0]);
+                            msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                            msg.guid.playlist.queue.splice(0,1);
+                        }
                         msg.guild.playlist.playNext();
                     }).catch(err => console.log(err));
                 else if(shuffle)
@@ -445,7 +465,12 @@ module.exports = class Hello extends DBF.Command{
                 msg.guild.playlist.sendQueueMessage(msg, song);
                 if(!msg.guild.voiceConnection) //join the channel and play first song if it's the first one in the queue
                     channel.join().then(conn => {
-                        msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                        if(shuffle)
+                        {
+                            msg.guild.playlist.queue.splice(0,0,msg.guild.playlist.queue[0]);
+                            msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                            msg.guid.playlist.queue.splice(0,1);
+                        }
                         msg.guild.playlist.playNext();
                     }).catch(err => console.log(err));
                 else if(shuffle)
