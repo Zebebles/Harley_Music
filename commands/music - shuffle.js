@@ -17,7 +17,7 @@ module.exports = class Hello extends DBF.Command{
         let msg = params.msg; let args = params.args;
         let channel = msg.guild.voiceConnection;
         let queue = msg.guild.playlist.queue;
-        if(!queue || !queue.length)
+        if(!queue || !queue.length || !channel)
             return msg.channel.send("There aren't any songs queued for me to shuffle.").catch(err => console.log(err));
         if(channel.channel != msg.member.voiceChannel)
             return msg.channel.send("You have to be in the same channel as me to do that.")

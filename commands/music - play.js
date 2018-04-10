@@ -162,9 +162,12 @@ module.exports = class Hello extends DBF.Command{
                 msg.guild.playlist.addSong(song, playNext); //add the song to the playlist
                 msg.guild.playlist.sendQueueMessage(msg, song); //send the "song is queued message"
                 if(!msg.guild.voiceConnection) //join the channel and play first song if it's the first one in the queue
-                    channel.join().then(conn => msg.guild.playlist.playNext()).catch(err => console.log(err));
-                if(shuffle)
-                    setTimeout(() => msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params),250);
+                    channel.join().then(conn => {
+                        msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                        msg.guild.playlist.playNext();
+                    }).catch(err => console.log(err));
+                else if(shuffle)
+                    msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
             }).catch(err => { //handle any errors
                 if(msg.guild.playlist.qmessage)
                     msg.guild.playlist.qmessage.edit("", {embed: {title: "⚠ Error queuing YouTube track.", color: 16106519, description: "**Reason:** " + err.reason}})
@@ -213,10 +216,13 @@ module.exports = class Hello extends DBF.Command{
                 });
             }).then( (playlistInfo) => {
                 msg.guild.playlist.sendQueueMessage(msg, playlistInfo);
-                if(!msg.guild.voiceConnection)
-                    channel.join().then(conn => msg.guild.playlist.playNext()).catch(err => console.log(err));
-                if(shuffle)
-                    setTimeout(() => msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params),250);
+                if(!msg.guild.voiceConnection) //join the channel and play first song if it's the first one in the queue
+                    channel.join().then(conn => {
+                        msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                        msg.guild.playlist.playNext();
+                    }).catch(err => console.log(err));
+                else if(shuffle)
+                    msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
             }).catch( err => {
                 if(msg.guild.playlist.qmessage)
                     msg.guild.playlist.qmessage.edit("", {embed:{title: "⚠ Error queuing YouTube playlist.", color: 16106519, description: "**Reason:** " + err.reason}})
@@ -282,10 +288,13 @@ module.exports = class Hello extends DBF.Command{
             }).then(song => {
                 msg.guild.playlist.addSong(song, playNext); //add the song to the playlist
                 msg.guild.playlist.sendQueueMessage(msg, song); //send the "song is queued message"
-                if(!msg.guild.voiceConnection)
-                    channel.join().then(conn => msg.guild.playlist.playNext()).catch(err => console.log(err));
-                if(shuffle)
-                    setTimeout(() => msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params),250);
+                if(!msg.guild.voiceConnection) //join the channel and play first song if it's the first one in the queue
+                    channel.join().then(conn => {
+                        msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                        msg.guild.playlist.playNext();
+                    }).catch(err => console.log(err));
+                else if(shuffle)
+                    msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
             }).catch(err => { //handle any errors
                 if(msg.guild.playlist.qmessage)
                     msg.guild.playlist.qmessage.edit("", {embed: {title: "⚠ Error queuing Soundcloud track.", color: 16106519, description: "**Reason:** " + err.reason}})
@@ -329,10 +338,13 @@ module.exports = class Hello extends DBF.Command{
                 }).catch(err => reject(err));
             }).then( (playlistInfo) => {
                 msg.guild.playlist.sendQueueMessage(msg, playlistInfo);
-                if(!msg.guild.voiceConnection)
-                    channel.join().then(conn => msg.guild.playlist.playNext()).catch(err => console.log(err));
-                if(shuffle)
-                    setTimeout(() => msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params),250);
+                if(!msg.guild.voiceConnection) //join the channel and play first song if it's the first one in the queue
+                    channel.join().then(conn => {
+                        msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                        msg.guild.playlist.playNext();
+                    }).catch(err => console.log(err));
+                else if(shuffle)
+                    msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
             }).catch( err => {
                 if(msg.guild.playlist.qmessage)
                     msg.guild.playlist.qmessage.edit("", {embed:{title: "⚠ Error queuing Soundcloud playlist.", color: 16106519, description: "**Reason:** " + err.reason}})
@@ -432,9 +444,12 @@ module.exports = class Hello extends DBF.Command{
             }).then(song => { //the .then takes care of sending the queued message and joining the channel.
                 msg.guild.playlist.sendQueueMessage(msg, song);
                 if(!msg.guild.voiceConnection) //join the channel and play first song if it's the first one in the queue
-                    channel.join().then(conn => msg.guild.playlist.playNext());
-                if(shuffle)
-                    setTimeout(() => msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params),250);
+                    channel.join().then(conn => {
+                        msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
+                        msg.guild.playlist.playNext();
+                    }).catch(err => console.log(err));
+                else if(shuffle)
+                    msg.client.commands.find(cmd => cmd.areYou("shuffle")).run(params);
             }).catch(err => { //takes care of any errors that might've happened
                 if(msg.guild.playlist.qmessage)
                     msg.guild.playlist.qmessage.edit("", {embed: {title: "⚠ Error queuing Spotify track.", color: 16106519, description: "**Reason:** " + err.reason}})
