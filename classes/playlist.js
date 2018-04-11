@@ -1,4 +1,3 @@
-const Discord = require("discord.js");
 let auth;// = require("../resources/auth.json");
 const Video = require("./video.js");
 const PlaylistMessageManager = require('./playlistMessageManager.js');
