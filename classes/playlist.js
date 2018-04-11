@@ -8,8 +8,8 @@ module.exports = class Playlist extends PlaylistMessageManager{
 
     constructor(guild){
         auth = guild.client.auth;
-        this.init();
         super(guild);
+        this.init();
     }
 
     set message(msg)
