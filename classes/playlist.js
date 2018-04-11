@@ -68,9 +68,9 @@ module.exports = class Playlist extends PlaylistMessageManager{
         this.auto = false;
         this.dontRelate = [];
         if(this.message && this.message.collector && !this.message.collector.ended)
-            super.message.collector.stop();
+            this.message.collector.stop();
         if(this.message)
-            super.message.clearReactions().catch(err => err);
+            this.message.clearReactions().catch(err => err);
         super.message = null;
         super.qmessage = null;
         super.textChannel = null;
