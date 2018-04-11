@@ -4,7 +4,7 @@ const Video = require("./video.js");
 const PlaylistMessageManager = require('./playlistMessageManager.js');
 
 
-module.exports = class Playlist extends PlaylistMessagemanager{
+module.exports = class Playlist extends PlaylistMessageManager{
 
     constructor(guild){
         auth = guild.client.auth;
