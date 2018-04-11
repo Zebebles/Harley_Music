@@ -144,7 +144,7 @@ module.exports = class Playlist extends PlaylistMessageManager{
                 this.updateMessage("Voice connection error.")
                 return this.init();
             }
-            this.textChannel.guild.voiceConnection.playStream(
+            var dispatcher = this.textChannel.guild.voiceConnection.playStream(
                 stream,
                 {volume: 0.5,
                 bitrate: 64,
