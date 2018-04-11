@@ -19,8 +19,25 @@ module.exports = class Playlist{
             this.timeout = null;
         }
         if(this.guild.voiceConnection)
+        {
             this.guild.voiceConnection.disconnect();
-        
+            
+            this.guild.client.voiceConnections.forEach(conn => {
+                let done = false;
+                conn.channel.members.forEach(mem => {
+                    if(!done && this.textChannel.guild.members.filter(m => !m.user.bot).get(mem.id)){
+                        done = true;
+                        setTimeout( () => {
+                            if(conn.dispatcher){
+                                conn.dispatcher.pause();
+                                conn.dispatcher.resume();
+                            }
+                        },250);
+                    }
+                });
+            });
+        }
+
         this.queue = [];
         this.paused = false;
         this.auto = false;
@@ -50,24 +67,6 @@ module.exports = class Playlist{
         this.paused = false;        
         if(this.queue.length == 0){
             this.updateMessage("Ran of out songs to play.");
-            if(!this.guild.voiceConnection)
-                return;
-            this.guild.voiceConnection.disconnect();            
-            this.guild.client.voiceConnections.forEach(conn => {
-                let done = false;
-                conn.channel.members.forEach(mem => {
-                    if(!done && this.textChannel.guild.members.filter(m => !m.user.bot).get(mem.id)){
-                        done = true;
-                        setTimeout( () => {
-                            if(conn.dispatcher){
-                                conn.dispatcher.pause();
-                                conn.dispatcher.resume();
-                            }
-                            //console.log("Pausing and resuming in " + conn.channel.guild.name);
-                        },250);
-                    }
-                });
-            });
             this.init();
             return;
         }else if(this.textChannel.guild.voiceConnection && this.textChannel.guild.voiceConnection.channel.members.size == 1){
@@ -78,22 +77,6 @@ module.exports = class Playlist{
             this.timeout = setTimeout(() => {
                 if(this.paused == true && this.textChannel.guild.voiceConnection && this.textChannel.guild.voiceConnection.channel.members.size == 1){
                     this.updateMessage("Voice Channel empty for 15 minutes");
-                    this.textChannel.guild.voiceConnection.disconnect();                    
-                    this.textChannel.client.voiceConnections.forEach(conn => {
-                        let done = false;
-                        conn.channel.members.forEach(mem => {
-                            if(!done && this.textChannel.guild.members.filter(m => !m.user.bot).get(mem.id)){
-                                done = true;
-                                setTimeout( () => {
-                                    if(conn.dispatcher){
-                                        conn.dispatcher.pause();
-                                        conn.dispatcher.resume();
-                                    }
-                                    //console.log("Pausing and resuming in " + conn.channel.guild.name);
-                                },250);
-                            }
-                        });
-                    });
                     this.init();                    
                 }
             },900000)

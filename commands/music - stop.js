@@ -28,22 +28,6 @@ module.exports = class Hello extends DBF.Command{
         msg.guild.playlist.updateMessage("Requested by " + msg.member);
         if(channel.dispatcher)
             channel.dispatcher.end("dont");
-        channel.disconnect();
-        msg.client.voiceConnections.forEach(conn => {
-            let done = false;
-            conn.channel.members.forEach(mem => {
-                if(!done && msg.guild.members.filter(m => !m.user.bot).get(mem.id)){
-                    done = true;
-                    setTimeout( () => {
-                        if(conn.dispatcher){
-                            conn.dispatcher.pause();
-                            conn.dispatcher.resume();
-                        }
-                        //console.log("Pausing and resuming in " + conn.channel.guild.name);
-                    },250);
-                }
-            });
-        });
         msg.guild.playlist.init();        
     }
 
