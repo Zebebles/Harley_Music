@@ -21,9 +21,10 @@ module.exports = class Queue extends DBF.Command{
         let msg = params.msg; let args = params.args;
         let channel = msg.guild.voiceConnection;
         let playlist = msg.guild.playlist;
-        if(!channel) return msg.channel.send("There aren't any tracks queued.").catch(err => console.log(err));
-        if(!channel && !channel.dispatcher) return msg.channel.send("There aren't any tracks queued.").catch(err => console.log(err));
-        if(!msg.guild.playlist.queue || msg.guild.playlist.queue.length < 2) return msg.channel.send("There aren't any songs queued.");
+        let validation = msg.guild.playlist.validateCommand(msg,true);
+        if(validation)
+            return msg.channel.send(validation).catch(err => console.log(err));
+        
         let page;
         if(args) page = parseInt(args);
         if(!page || isNaN(page)) page = 1;
@@ -52,26 +53,25 @@ module.exports = class Queue extends DBF.Command{
 
                 collector.on("collect", reaction => {
                     clearTimeout(timeout);
-                    reaction.remove(reaction.users.find(u => !u.bot)).then(() => {
-                        if(reaction.emoji.name == prev.emoji.name)
-                        {
-                            page--;
-                            if(page < 0)
-                                page = pages-1;
-                        }
-                        else
-                        {
-                            page++;
-                            if(page >= pages)
-                                page = 0;
-                        }
-                        embed = generateMessage(page);
-                        m.edit("", {embed}).catch(err => console.log(err));
-                        timeout = setTimeout(() => {
-                            m.clearReactions();
-                            collector.stop();
-                        },10000);
-                    });
+                    reaction.users.remove(reaction.users.find(u => !u.bot))
+                    if(reaction.emoji.name == prev.emoji.name)
+                    {
+                        page--;
+                        if(page < 0)
+                            page = pages-1;
+                    }
+                    else
+                    {
+                        page++;
+                        if(page >= pages)
+                            page = 0;
+                    }
+                    embed = generateMessage(page);
+                    m.edit("", {embed}).catch(err => console.log(err));
+                    timeout = setTimeout(() => {
+                        m.reactions.removeAll();
+                        collector.stop();
+                    },10000);
                 });
             })));
     
@@ -82,11 +82,11 @@ module.exports = class Queue extends DBF.Command{
             let ind = 0;
             for(let i = 1+(5*page); i < 6+(5*page) && i < playlist.queue.length; i++){
                 ind++;
-                message += "\n**" + i + "**\t-\t`" + playlist.queue[i].title + "`";
+                message += "\n**" + i + "**\t-\t`" + playlist.queue.songAt(i).title + "`";
             }
 
             if(message != ""){
-                let myEmbed = new Discord.RichEmbed();
+                let myEmbed = new Discord.MessageEmbed();
                 myEmbed.setColor(msg.guild.me.displayColor);
                 myEmbed.setTitle("Showing page " + (page+1) + " of " + (pages) + ".");
                 myEmbed.setDescription(message);

@@ -1,7 +1,7 @@
 const DBF = require("discordjs-bot-framework");
 const Discord = require("discord.js");
 const mysql = require("mysql");
-const Playlist = require("./playlist.js");
+const Playlist = require("./Music/Playlist.js");
 const fetch = require("node-fetch");
 const snekfetch = require("snekfetch");
 var Promise = require("bluebird");
@@ -37,6 +37,8 @@ class myClient extends DBF.Client {
         this.on("guildDelete", guild => 
         {
             this.sendStatus(true);
+            delete guild.playlist;
+            delete guild;
         });
 
         this.on("guildMemberAdd", member => 

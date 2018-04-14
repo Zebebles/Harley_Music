@@ -4,7 +4,7 @@ const Discord = require("discord.js");
 module.exports = class changeGame extends DBF.Command{
     constructor(){
         super({
-             name: "eval2", //is pretty much just another trigger, but can be used filter commands.
+             name: "eval", //is pretty much just another trigger, but can be used filter commands.
              triggers: [], //any message (excluding msg.client.Prefix) that will trigger this command.
              group: "Utils", //this command will come under this group in the automatic help message.
              ownerOnly : true, //if this command is to be used by the bot creator only.
@@ -17,7 +17,7 @@ module.exports = class changeGame extends DBF.Command{
 
     run(params = {"msg": msg, "args": args, "user" : user}){ //all the code for your command goes in here.
         let msg = params.msg; var args = params.args;
-        let embed = new Discord.RichEmbed();
+        let embed = new Discord.MessageEmbed();
         embed.setTitle("Eval results.");
         embed.addField("Input","```javascript\n" + args + "```:arrow_down:");
         Promise.all([

@@ -1,6 +1,6 @@
 const myClient = require("./classes/client.js");
 let auth = require("./resources/auth.json");
-const Playlist = require("./classes/playlist.js");
+const Playlist = require("./classes/Music/Playlist.js");
 const spotify = require("spotify-web-api-node");
 let snekfetch = require("snekfetch");
 const fs = require('fs');
