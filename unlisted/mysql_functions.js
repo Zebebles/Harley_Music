@@ -61,7 +61,7 @@ module.exports = function () {
                     if(err)
                         return reject(err);
                     res.forEach(tuple => {
-                        client.fetchUser(tuple.id).then(user => {
+                        client.users.fetch(tuple.id).then(user => {
                             if(user)
                             {
                                 if(tuple.tier)

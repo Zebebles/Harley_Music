@@ -164,7 +164,7 @@ snekfetch.get("http://"+auth.webserver+"/servers/register?pw=" + auth.password +
             if(!req.query.id)
                 return res.sendStatus(400);
             
-            bot.fetchUser(req.query.id).then(user => {
+            bot.users.fetch(req.query.id).then(user => {
                 if(!user)
                     return res.sendStatus(404);
 
