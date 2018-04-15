@@ -58,6 +58,8 @@ module.exports = class Playlist{
                 });
             });
         }
+
+        this.guild.client.sendStatus(true);
     }
 
     handleError(error)
