@@ -47,7 +47,7 @@ module.exports = class Queue extends DBF.Command{
                 let collector = new Discord.ReactionCollector(m, filter);
                 
                 var timeout = setTimeout(() => {
-                    m.clearReactions();
+                    m.reactions.removeAll();
                     collector.stop();
                 },10000);
 
