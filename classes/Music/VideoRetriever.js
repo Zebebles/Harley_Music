@@ -178,12 +178,12 @@ module.exports = class VideoRetriever
         {
             authorize.then( () => {
                 if(url.match(/user(\/|:)/g) && url.match(/playlist(\/|:)/g))
-                    return playlist(url.match(/user(\/|:).[^\/:\S]*/g)[0].replace(/user(\/|:)/g, ""),
-                                url.match(/playlist(\/|:).[^\/:\S]*/g)[0].replace(/playlist(\/|:)/g,""));
+                    return playlist(url.match(/user(\/|:).[^\/:\s?]*/g)[0].replace(/user(\/|:)/g, ""),
+                                url.match(/playlist(\/|:).[^\/:\s?]*/g)[0].replace(/playlist(\/|:)/g,""));
                 else if(url.match(/track(\/|:)/g))
-                    return track(url.match(/track(\/|:).[^\/:\S]*/g)[0].replace(/track(\/|:)/g,""));
+                    return track(url.match(/track(\/|:).[^\/:\s?]*/g)[0].replace(/track(\/|:)/g,""));
                 else if(url.match(/album(\/|:)/g))
-                    return album(url.match(/album(\/|:).[^\/:\S]*/g)[0].replace(/album(\/|:)/g,""));
+                    return album(url.match(/album(\/|:).[^\/:\s?]*/g)[0].replace(/album(\/|:)/g,""));
                 else
                     return reject({friendly: "That doesn't look like a valid spotify url."});
             }).catch(err => reject({friendly: "Failed authorizing spotify client", error: err}));
