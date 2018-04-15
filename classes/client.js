@@ -37,8 +37,6 @@ class myClient extends DBF.Client {
         this.on("guildDelete", guild => 
         {
             this.sendStatus(true);
-            delete guild.playlist;
-            delete guild;
         });
 
         this.on("guildMemberAdd", member => 

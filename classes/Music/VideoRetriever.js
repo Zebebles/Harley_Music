@@ -57,9 +57,9 @@ module.exports = class VideoRetriever
             .then(body =>{
                 let tracks = body.body.items.filter(track => track.title != "Deleted video" && track.title != "Private video");
                 if(!tracks || !tracks.length)
-                    return reject("No tracks found.");
+                    return reject({friendly: "No tracks found."});
                 resolve({songs  :   tracks.map(resolveTrack)});
-            }).catch(reject);
+            }).catch(err => reject({friendly: "Error searching for tracks.", error: err}));
         });
     }
 
@@ -73,13 +73,13 @@ module.exports = class VideoRetriever
             else if(identifier.match(/[?&]v=/gi))
                 return track(identifier.match(/[?&]v=.[^&]*/gi)[0].replace(/[?&]v=/gi, ""));
             else
-                return reject("That isn't a valid youtbe URL");
+                return reject({friendly: "That isn't a valid youtbe URL"});
 
             function track(id)
             {
                 ytas.getVideoByID(id).then(vid => {
                     if(!vid || !vid.title || vid.title == "Deleted video" || vid.title == "Private video")
-                        return reject("Private / Deleted / Region locked.");
+                        return reject({friendly: "Private / Deleted / Region locked."});
                     resolve({songs  :   [{
                         link    :   vid.id,
                         url     :   `https://www.youtube.com/watch?v=${vid.id}`,
@@ -89,7 +89,7 @@ module.exports = class VideoRetriever
                         startTime   :   0,
                         image   :   `https://img.youtube.com/vi/${vid.id}/mqdefault.jpg`
                     }]});
-                }).catch(err => reject("Couldn't get video.\n" + err));
+                }).catch(err => reject({friendly : "Couldn't get video.", error: err}));
             }
 
             function playlist(id)
@@ -107,18 +107,18 @@ module.exports = class VideoRetriever
 
                 ypi(auth.googleKey, id).then(function(items) { //search for the playlist (tracks)
                     if(!items || !items.length)
-                        return reject("Could not get Playlist.");
+                        return reject({friendly: "Could not get Playlist."});
                     snekfetch.get('https://www.googleapis.com/youtube/v3/playlists?part=snippet&key=' + auth.googleKey + '&id=' + id ).then(body =>{ //get the title and what not from the playlist
                         let playlistInfo = body.body.items[0];
                         items = items.filter(item => item.title != "Deleted video" && item.title != "Private video");
                         if(items.length == 0)
-                            return reject("Playlist has no valid tracks.");
+                            return reject({friendly: "Playlist has no valid tracks."});
                         resolve({   songs   :   items.map(resolveTrack),
                                     title   :   playlistInfo.snippet.title, 
                                     tracks  :   items.length
                                 });
-                    }).catch(err => reject("Could not get Playlist.\n" + err));
-                }).catch(err => reject("Could not get Playlist.\n" + err));
+                    }).catch(err => reject({friendly: "Could not get Playlist.", error: err}));
+                }).catch(err => reject({friendly : "Could not get Playlist.", error: err}));
             }
         })
         
@@ -146,24 +146,24 @@ module.exports = class VideoRetriever
         {
             snekfetch.get("https://api.soundcloud.com/resolve?url=" + url + "&client_id=" + auth.scID).then(response => {
                 if(response.status != 200 || !response.text)
-                    return reject("Couldn't get track/playlist");
+                    return reject({friendly: "Couldn't get track/playlist"});
                 if(response.body.kind == "track")
                     return track(response.body);
                 else
                     return playlist(response.body);
-            }).catch(() => reject("Couldn't get that track."))
+            }).catch((err) => reject({friendly: "Couldn't get that track.", error: err}))
 
             function track(track)
             {
                 if(!track.title)
-                    return reject("Track has no title");
+                    return reject({friendly : "Track could not be resolved"});
                 resolve({songs: [resolveTrack(track)]});
             }
 
             function playlist(playlist)
             {
                 if(!playlist.tracks || !playlist.tracks.length)
-                    return resolve("Playlist had no tracks.");
+                    return resolve({friendly: "Playlist had no tracks."});
                 resolve({songs  :   playlist.tracks.map(resolveTrack), 
                         tracks :   playlist.tracks.length,
                         title: playlist.title});
@@ -184,13 +184,13 @@ module.exports = class VideoRetriever
             else if(url.match(/album(\/|:)/g))
                 return album(url.match(/album(\/|:).[^\/:]*/g)[0].replace(/album(\/|:)/g,""));
             else
-                return reject("That doesn't look like a valid spotify url.");
+                return reject({friendly: "That doesn't look like a valid spotify url."});
 
             function playlist(userID, playlistID)
             {
                 client.spotify.getPlaylist(userID, playlistID).then(data => {
                     if(!data || !data.body || !data.body.tracks.items || !data.body.tracks.items.length)
-                        return resolve("Couldn't get playlist.");
+                        return resolve({friendly: "Couldn't get playlist."});
                     return resolve(
                         {songs: data.body.tracks.items.map(track => {
                             return {
@@ -201,28 +201,28 @@ module.exports = class VideoRetriever
                         title  :   data.body.name,
                         tracks  :   data.body.tracks.items.length
                     });
-                });
+                }).catch(err => reject({friendly: "Couldn't resolve playlist", error: err}));
             }
 
             function track(trackID)
             {
                 client.spotify.getTrack(trackID).then(data => {
                     if(!data || !data.body)
-                        return reject("Couldn't get track.");
+                        return reject({friendly: "Couldn't get track."});
                     return resolve(
                         {songs    :   [{
                             type    :   "partial",
                             title   :   data.body.album.artists[0].name + " - " + data.body.name,
                             image   :   "http://www.stickpng.com/assets/images/59b5bb466dbe923c39853e00.png"}]
                         });
-                }).catch(reject);
+                }).catch(err => reject({friendly: "Couldn't resolve track.", error: err}));
             }
 
             function album(albumID)
             {
                 client.spotify.getAlbum(albumID).then(data => {
                     if(!data || !data.body || !data.body.tracks.items || !data.body.tracks.items.length)
-                        return reject("Couldn't get album.");
+                        return reject({friendly: "Couldn't get album."});
                     return resolve(
                         {songs: data.body.tracks.items.map(track => {
                             return {
@@ -233,7 +233,7 @@ module.exports = class VideoRetriever
                         title  :   data.body.name,
                         tracks  :   data.body.tracks.items.length
                     })
-                });
+                }).catch(err => reject({friendly : "Couldn't resolve album", error: err}));
             }
         });
     }

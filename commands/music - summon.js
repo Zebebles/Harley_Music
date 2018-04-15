@@ -15,10 +15,13 @@ module.exports = class Hello extends DBF.Command{
     }
     run(params = {msg, args}){
         let msg = params.msg;
-        if(msg.guild.voiceConnection && msg.member.voiceChannel && msg.member.voiceChannel.joinable && msg.member.voiceChannel.speakable)
-        {
-            msg.member.voiceChannel.join().catch(err => console.log(err));
-            msg.guild.playlist.voiceChannel = msg.member.voiceChannel;
-        }   
+        let validation = msg.guild.playlist.validateCommand(msg, true);
+        if(validation)
+            return msg.channel.send(validation).catch(err => console.log(err));
+        if(!msg.member.voiceChannel)
+            return msg.channel.send("You have to be in a voice channel to summon me.");
+        if(!msg.member.voiceChannel.joinable || !msg.member.voiceChannel.speakable)
+            return msg.channel.send("I can't join that channel.");
+        msg.member.voiceChannel.join().catch(err => console.log(err));
     }
 }

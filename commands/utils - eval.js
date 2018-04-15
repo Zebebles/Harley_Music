@@ -4,7 +4,7 @@ const Discord = require("discord.js");
 module.exports = class changeGame extends DBF.Command{
     constructor(){
         super({
-             name: "eval", //is pretty much just another trigger, but can be used filter commands.
+             name: "eval2", //is pretty much just another trigger, but can be used filter commands.
              triggers: [], //any message (excluding msg.client.Prefix) that will trigger this command.
              group: "Utils", //this command will come under this group in the automatic help message.
              ownerOnly : true, //if this command is to be used by the bot creator only.
