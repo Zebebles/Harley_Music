@@ -177,12 +177,12 @@ module.exports = class VideoRetriever
         return new Promise(function(resolve, reject)
         {
             if(url.match(/user(\/|:)/g) && url.match(/playlist(\/|:)/g))
-                return playlist(url.match(/user(\/|:).[^\/:]*/g)[0].replace(/user(\/|:)/g, ""),
-                                url.match(/playlist(\/|:).[^\/:]*/g)[0].replace(/playlist(\/|:)/g,""));
+                return playlist(url.match(/user(\/|:).[^\/:\S]*/g)[0].replace(/user(\/|:)/g, ""),
+                                url.match(/playlist(\/|:).[^\/:\S]*/g)[0].replace(/playlist(\/|:)/g,""));
             else if(url.match(/track(\/|:)/g))
-                return track(url.match(/track(\/|:).[^\/:]*/g)[0].replace(/track(\/|:)/g,""));
+                return track(url.match(/track(\/|:).[^\/:\S]*/g)[0].replace(/track(\/|:)/g,""));
             else if(url.match(/album(\/|:)/g))
-                return album(url.match(/album(\/|:).[^\/:]*/g)[0].replace(/album(\/|:)/g,""));
+                return album(url.match(/album(\/|:).[^\/:\S]*/g)[0].replace(/album(\/|:)/g,""));
             else
                 return reject({friendly: "That doesn't look like a valid spotify url."});
 
