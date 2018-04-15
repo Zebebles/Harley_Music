@@ -34,9 +34,9 @@ module.exports = class VideoRetriever
 
     search(identifier) // RETURNS A PROMISE WITH AN ARRAY OF SONG OBJECTS RETRIEVED FROM THE IDENTIFIER, AND PLAYLIST INFO.  I.E. THEN(TRACKS, PLAYLISTINFO)
     {
-        if(identifier.toLowerCase().match(/soundcloud.com\//gi))
+        if(identifier.match(/soundcloud.com\//gi))
             return this.soundcloud(identifier);
-        else if(identifier.match(/https:\/\/open.spotify.com/g) || identifier.match(/spotify:(track|user|playlist|album)/g))
+        else if(identifier.match(/https:\/\/open.spotify.com/gi) || identifier.match(/spotify:(track|user|playlist|album)/gi))
             return this.spotify(identifier);
         else if(identifier.match(/([?&]v=|[&?]list=)/gi))
             return this.youtube(identifier);
@@ -191,13 +191,13 @@ module.exports = class VideoRetriever
         return new Promise(function(resolve, reject)
         {
             authorize().then( () => {
-                if(url.match(/user(\/|:)/g) && url.match(/playlist(\/|:)/g))
-                    return playlist(url.match(/user(\/|:).[^\/:\s?]*/g)[0].replace(/user(\/|:)/g, ""),
-                                url.match(/playlist(\/|:).[^\/:\s?]*/g)[0].replace(/playlist(\/|:)/g,""));
-                else if(url.match(/track(\/|:)/g))
-                    return track(url.match(/track(\/|:).[^\/:\s?]*/g)[0].replace(/track(\/|:)/g,""));
-                else if(url.match(/album(\/|:)/g))
-                    return album(url.match(/album(\/|:).[^\/:\s?]*/g)[0].replace(/album(\/|:)/g,""));
+                if(url.match(/user(\/|:)/gi) && url.match(/playlist(\/|:)/gi))
+                    return playlist(url.match(/user(\/|:).[^\/:\s?]*/gi)[0].replace(/user(\/|:)/gi, ""),
+                                    url.match(/playlist(\/|:).[^\/:\s?]*/gi)[0].replace(/playlist(\/|:)/gi,""));
+                else if(url.match(/track(\/|:)/gi))
+                    return track(url.match(/track(\/|:).[^\/:\s?]*/gi)[0].replace(/track(\/|:)/gi,""));
+                else if(url.match(/album(\/|:)/gi))
+                    return album(url.match(/album(\/|:).[^\/:\s?]*/gi)[0].replace(/album(\/|:)/gi,""));
                 else
                     return reject({friendly: "That doesn't look like a valid spotify url."});
             }).catch(err => reject({friendly: "Failed authorizing spotify client", error: err}));
