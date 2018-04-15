@@ -36,7 +36,7 @@ module.exports = class VideoRetriever
     {
         if(identifier.match(/soundcloud.com\//gi))
             return this.soundcloud(identifier);
-        else if(identifier.match(/https:\/\/open.spotify.com/gi) || identifier.match(/spotify:(track|user|playlist|album)/gi))
+        else if(identifier.match(/open.spotify.com/gi) || identifier.match(/spotify:(track|user|playlist|album)/gi))
             return this.spotify(identifier);
         else if(identifier.match(/([?&]v=|[&?]list=)/gi))
             return this.youtube(identifier);
