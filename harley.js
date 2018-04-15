@@ -124,7 +124,7 @@ snekfetch.get("http://"+auth.webserver+"/servers/register?pw=" + auth.password +
                     aliases = aliases.substr(0, aliases.length-1);
                 bot.commandsList.push({"name": cmd.name, "group": cmd.group, "aliases" : aliases , "description": cmd.description, "example": cmd.example})
             });
-            console.log(bod.commandsList);
+            console.log(bot.commandsList);
             snekfetch.post("http://" + bot.auth.webserver + "/servers/commands")
             .send({commands: bot.commandsList})
             .end()
