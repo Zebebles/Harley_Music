@@ -126,6 +126,8 @@ module.exports = class PlaylistMessageManager
 
     getDurationString(time)
     {
+        if(!time || isNaN(time))
+            return "Unknown";
         var date = new Date(null);
         date.setSeconds(time); // specify value for SECONDS here
         return date.toISOString().substr(11, 8);

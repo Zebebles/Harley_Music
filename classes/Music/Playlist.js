@@ -159,7 +159,7 @@ module.exports = class Playlist{
 
     validateCommand(msg, needQueue, needPlaying) // validates a message and returns the error if there is one.
     {                                            // needQueue means there must be at least one track queued.
-        if(!msg.member.voiceChannel)             // needPlaying means there must be something playing.
+        if(!msg.member.voiceChannel)                
             return "You must be in a voice channel for that.";
         
         if(msg.guild.me.voiceConnection && (msg.member.guild.me.voiceChannel.id != msg.member.voiceChannel.id))
