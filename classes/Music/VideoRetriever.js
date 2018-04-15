@@ -18,16 +18,16 @@ module.exports = class VideoRetriever
         ytas = new yta(playlist.auth.googleKey);
 
         //  INITIATE THE SPOTIFY AUTH IF IT HASN'T ALREADY BEEN INITIATED
-        if(!client.spotify)
+        if(!this.client.spotify)
         {
-            client.spotify = new spotify({
+            this.client.spotify = new spotify({
                 clientId: auth.spotifyId,
                 clientSecret: auth.spotifySecret
             });
 
-            client.spotify.clientCredentialsGrant().then(data => {
-                client.spotify.expiry = Date.now() + data.body['expires_in'];
-                client.spotify.setAccessToken(data.body['access_token']);
+            this.client.spotify.clientCredentialsGrant().then(data => {
+                this.client.spotify.expiry = Date.now() + data.body['expires_in'];
+                this.client.spotify.setAccessToken(data.body['access_token']);
             });
         }
     }
