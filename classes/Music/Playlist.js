@@ -86,7 +86,7 @@ module.exports = class Playlist{
 
     next()
     {
-        //this.guild.client.sendStatus(true);
+        this.guild.client.sendStatus(true);
         this.queue.next();
         if(this.queue.empty)//STOP THE PLAYBACK
             return this.stop("Ran of out songs to play.");
