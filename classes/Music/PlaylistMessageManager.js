@@ -22,7 +22,7 @@ module.exports = class PlaylistMessageManager
                                             ]});
 
         this.onCollect = (reaction, user) => {
-            reaction.users.remove(reaction.users.find(u => !u.bot))
+            reaction.users.remove(reaction.users.find(u => !u.bot)).catch(err => err);
             this.reactions.find(react => reaction.emoji.name == react.emoji).run({msg: {    author: user,
                                                                                             member: playlist.guild.member(user),
                                                                                             channel: this.textChannel,

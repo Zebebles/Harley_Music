@@ -47,13 +47,13 @@ module.exports = class Queue extends DBF.Command{
                 let collector = new Discord.ReactionCollector(m, filter);
                 
                 var timeout = setTimeout(() => {
-                    m.reactions.removeAll();
+                    m.reactions.removeAll().catch(err => err);
                     collector.stop();
                 },10000);
 
                 collector.on("collect", reaction => {
                     clearTimeout(timeout);
-                    reaction.users.remove(reaction.users.find(u => !u.bot))
+                    reaction.users.remove(reaction.users.find(u => !u.bot)).catch(err => err);
                     if(reaction.emoji.name == prev.emoji.name)
                     {
                         page--;
@@ -69,7 +69,7 @@ module.exports = class Queue extends DBF.Command{
                     embed = generateMessage(page);
                     m.edit("", {embed}).catch(err => console.log(err));
                     timeout = setTimeout(() => {
-                        m.reactions.removeAll();
+                        m.reactions.removeAll().catch(err => err);
                         collector.stop();
                     },10000);
                 });
