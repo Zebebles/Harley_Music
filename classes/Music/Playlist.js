@@ -22,7 +22,8 @@ module.exports = class Playlist{
     {
         if(error)
             console.log(error);
-        delete this.dispatcher;
+        if(this.dispatcher)
+            this.dispatcher.destroy();
         this.dispatcher = null;
         this.auto = false;
         this.dontRelate = [];
@@ -89,6 +90,8 @@ module.exports = class Playlist{
         this.queue.next();
         if(this.queue.empty)//STOP THE PLAYBACK
             return this.stop("Ran of out songs to play.");
+        if(this.dispatcher)
+            this.dispatcher.destroy();
         else if(this.guild.voiceConnection && this.guild.voiceConnection.channel.members.size == 1)
         {
             this.messageManager.textChannel.send("Looks like the voice channel is empty :c.  Pausing playback for now, you can resume it with `" + this.guild.prefix + "resume`");
