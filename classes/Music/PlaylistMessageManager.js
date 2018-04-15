@@ -78,8 +78,8 @@ module.exports = class PlaylistMessageManager
         if(endedEmbed)
         {
             if(this.message)
-                this.message.delete();
-            return this.textChannel.send("", {embed: endedEmbed});
+                this.message.delete().catch(err => err);
+            return this.textChannel.send("", {embed: endedEmbed}).catch(err => err);
         }
 
         this.updateEmbed();
@@ -90,11 +90,11 @@ module.exports = class PlaylistMessageManager
                 this.message = msg;
                 this.collector = new ReactionCollector(msg, this.filter).on("collect", this.onCollect); 
                 this.addReactions();
-            }).catch(err => console.log(err));
+            }).catch(err => err);
         }
         else if(this.textChannel.lastMessage.id != this.message.id)
         {
-            this.message.delete();
+            this.message.delete().catch(err => err);
             this.textChannel.send("",{embed: this.embed}).then(msg => {
                 this.message = msg;
                 this.addReactions();
