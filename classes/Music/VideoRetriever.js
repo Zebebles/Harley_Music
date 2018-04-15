@@ -151,7 +151,7 @@ module.exports = class VideoRetriever
                     return track(response.body);
                 else
                     return playlist(response.body);
-            }).catch((err) => reject({friendly: "Couldn't get that track.", error: err}))
+            }).catch((err) => reject({friendly: "Couldn't get that track."}))
 
             function track(track)
             {
