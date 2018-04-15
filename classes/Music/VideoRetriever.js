@@ -73,7 +73,7 @@ module.exports = class VideoRetriever
                 if(!tracks || !tracks.length)
                     return reject({friendly: "No tracks found."});
                 resolve({songs  :   tracks.map(resolveTrack)});
-            }).catch(err => reject({friendly: "Error searching for tracks.", error: err}));
+            }).catch(err => reject({friendly: "Error searching for tracks."}));
         });
     }
 
@@ -103,7 +103,7 @@ module.exports = class VideoRetriever
                         startTime   :   0,
                         image   :   `https://img.youtube.com/vi/${vid.id}/mqdefault.jpg`
                     }]});
-                }).catch(err => reject({friendly : "Couldn't get video.", error: err}));
+                }).catch(err => reject({friendly : "Couldn't find that video"}));
             }
 
             function playlist(id)
@@ -131,8 +131,8 @@ module.exports = class VideoRetriever
                                     title   :   playlistInfo.snippet.title, 
                                     tracks  :   items.length
                                 });
-                    }).catch(err => reject({friendly: "Could not get Playlist.", error: err}));
-                }).catch(err => reject({friendly : "Could not get Playlist.", error: err}));
+                    }).catch(err => reject({friendly: "Could not get that Playlist."}));
+                }).catch(err => reject({friendly : "Could not get that Playlist."}));
             }
         })
         
@@ -217,7 +217,7 @@ module.exports = class VideoRetriever
                         title  :   data.body.name,
                         tracks  :   data.body.tracks.items.length
                     });
-                }).catch(err => reject({friendly: "Couldn't resolve playlist", error: err}));
+                }).catch(err => reject({friendly: "Couldn't resolve playlist"}));
             }
 
             function track(trackID)
@@ -231,7 +231,7 @@ module.exports = class VideoRetriever
                             title   :   data.body.album.artists[0].name + " - " + data.body.name,
                             image   :   "http://www.stickpng.com/assets/images/59b5bb466dbe923c39853e00.png"}]
                         });
-                }).catch(err => reject({friendly: "Couldn't resolve track.", error: err}));
+                }).catch(err => reject({friendly: "Couldn't resolve track."}));
             }
 
             function album(albumID)
@@ -249,7 +249,7 @@ module.exports = class VideoRetriever
                         title  :   data.body.name,
                         tracks  :   data.body.tracks.items.length
                     })
-                }).catch(err => reject({friendly : "Couldn't resolve album", error: err}));
+                }).catch(err => reject({friendly : "Couldn't resolve album"}));
             }
 
             
