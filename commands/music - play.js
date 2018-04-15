@@ -39,14 +39,6 @@ module.exports = class Hello extends DBF.Command{
             return msg.channel.send("I can't join that voice channel.").catch(err => console.log(err));
         if(msg.guild.playlist.qing) /*  BECAUSE QUEING TWO SONGS AT THE SAME TIME W/ DIFFERENT COMMANDS CAN BE PROBLEMATIC  */
             return msg.channel.send("Please wait until the current song or playlist has finished being added before queueing something else.").catch(err => console.log(err));
-        if(!msg.client.spotify.expiry || msg.client.spotify.expiry-200 < Date.now()){   /*  RE-AUTHORIZE SPOTIFY IF NEED BE.    */
-            return msg.client.spotify.clientCredentialsGrant().then(data => 
-            {
-                msg.client.spotify.expiry = Date.now() + data.body['expires_in'];
-                msg.client.spotify.setAccessToken(data.body['access_token']);
-                msg.client.commands.find(c => c.areYou('play')).run(params);
-            });
-        }
 
         /*
             THESE ARE THE OPTIONAL ARGUMENTS

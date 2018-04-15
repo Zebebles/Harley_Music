@@ -176,15 +176,17 @@ module.exports = class VideoRetriever
         let client = this.client;
         return new Promise(function(resolve, reject)
         {
-            if(url.match(/user(\/|:)/g) && url.match(/playlist(\/|:)/g))
-                return playlist(url.match(/user(\/|:).[^\/:\S]*/g)[0].replace(/user(\/|:)/g, ""),
+            authorize.then( () => {
+                if(url.match(/user(\/|:)/g) && url.match(/playlist(\/|:)/g))
+                    return playlist(url.match(/user(\/|:).[^\/:\S]*/g)[0].replace(/user(\/|:)/g, ""),
                                 url.match(/playlist(\/|:).[^\/:\S]*/g)[0].replace(/playlist(\/|:)/g,""));
-            else if(url.match(/track(\/|:)/g))
-                return track(url.match(/track(\/|:).[^\/:\S]*/g)[0].replace(/track(\/|:)/g,""));
-            else if(url.match(/album(\/|:)/g))
-                return album(url.match(/album(\/|:).[^\/:\S]*/g)[0].replace(/album(\/|:)/g,""));
-            else
-                return reject({friendly: "That doesn't look like a valid spotify url."});
+                else if(url.match(/track(\/|:)/g))
+                    return track(url.match(/track(\/|:).[^\/:\S]*/g)[0].replace(/track(\/|:)/g,""));
+                else if(url.match(/album(\/|:)/g))
+                    return album(url.match(/album(\/|:).[^\/:\S]*/g)[0].replace(/album(\/|:)/g,""));
+                else
+                    return reject({friendly: "That doesn't look like a valid spotify url."});
+            }).catch(err => reject({friendly: "Failed authorizing spotify client", error: err}));
 
             function playlist(userID, playlistID)
             {
@@ -234,6 +236,24 @@ module.exports = class VideoRetriever
                         tracks  :   data.body.tracks.items.length
                     })
                 }).catch(err => reject({friendly : "Couldn't resolve album", error: err}));
+            }
+
+            
+            function authorize()
+            {
+                return new Promise((resolve, reject) => {
+                    let client = this.playlist.guild.client;
+                    if(!client.spotify.expiry || client.spotify.expiry-200 < Date.now()){   /*  RE-AUTHORIZE SPOTIFY IF NEED BE.    */
+                        return client.spotify.clientCredentialsGrant().then(data => 
+                        {
+                            client.spotify.expiry = Date.now() + data.body['expires_in'];
+                            client.spotify.setAccessToken(data.body['access_token']);
+                            resolve();
+                        }).catch(err => reject(err))
+                    }
+                    else
+                        resolve();
+                });
             }
         });
     }
