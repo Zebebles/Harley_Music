@@ -113,16 +113,16 @@ snekfetch.get("http://"+auth.webserver+"/servers/register?pw=" + auth.password +
         });
 
         bot.on('commandsReloaded', () => {
-            bot.commandsList = [];
-            bot.commands.filter(cmd => !cmd.ownerOnly).forEach(cmd => 
-                bot.commandsList.push({"name": cmd.name, "group": cmd.group, "aliases" : (cmd.triggers.join(", ") || "N/A") , "description": cmd.description, "example": cmd.example})
-            );
-            console.log(bot.commandsList);
-            console.log(bot.commands);
-            snekfetch.post("http://" + bot.auth.webserver + "/servers/commands")
-            .send({commands: bot.commandsList})
-            .end()
-            .catch(err => console.log(err));
+            setTimeout(() => {
+                bot.commandsList = [];
+                bot.commands.filter(cmd => !cmd.ownerOnly).forEach(cmd => 
+                    bot.commandsList.push({"name": cmd.name, "group": cmd.group, "aliases" : (cmd.triggers.join(", ") || "N/A") , "description": cmd.description, "example": cmd.example})
+                );
+                snekfetch.post("http://" + bot.auth.webserver + "/servers/commands")
+                .send({commands: bot.commandsList})
+                .end()
+                .catch(err => console.log(err));
+            },500);
         });
 
         bot.login();
