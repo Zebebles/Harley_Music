@@ -81,7 +81,7 @@ module.exports = class Queue
         if(!song || !(song instanceof Video))
             return Error ("Must provide a song to add, and the song must be an instance of Video class");
         ind = ind && !isNaN(parseInt(ind)) ? parseInt(ind) : this.songs.length-1;
-        this.songs.splice(ind,0,song);
+        this.songs.splice(ind, 0, song);
     }
 
     remove(song, amount)    //  SONG CAN BE A VIDEO OR A STRING THAT IDENTIFIES THE VIDEO (TITLE)
