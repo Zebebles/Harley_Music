@@ -43,7 +43,7 @@ module.exports = class PlaylistMessageManager
 
     stop(reason)
     {
-        this.update({title: ":octagonal_sign: Music playback stopped.", fields : [{name : "Reason", value : reason ? reason : "Unknown",}]});
+        this.update({title: ":octagonal_sign: Music playback stopped.", fields : [{name : "Reason", value : reason ? reason : "Unknown"}], color: this.textChannel.guild.me.displayColor});
         
         if(this.collector)
             this.collector.stop();
