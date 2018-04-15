@@ -92,7 +92,7 @@ module.exports = class Playlist{
             return this.stop("Ran of out songs to play.");
         else if(this.guild.voiceConnection && this.guild.voiceConnection.channel.members.size == 1)
         {
-            this.textChannel.send("Looks like the voice channel is empty :c.  Pausing playback for now, you can resume it with `" + this.guild.prefix + "resume`");
+            this.messageManager.textChannel.send("Looks like the voice channel is empty :c.  Pausing playback for now, you can resume it with `" + this.guild.prefix + "resume`");
             if(this.timeout)
                 clearTimeout(this.timeout);
             return this.timeout = setTimeout(() => {
