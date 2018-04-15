@@ -59,7 +59,7 @@ module.exports = class YoutubeVideo extends Video
         return new Promise((resolve, reject) => {
             if(this.duration)
                 return resolve(this.duration);
-            ytas.getVideoByID(this.link).then(video => {
+            ytas.getVideoByID(this.link).then(video => {    //  TODO    :   USE SNEKFETCH AND YOUTUBE API TO JUST GET CONTENTDETAILS OR FILEDETAILS (WHICHEVER IS SMALLER AND HAS DURATION)
                 if(!video)
                     return reject("Couldn't get video.");
                 this.duration = video.durationSeconds;
@@ -68,15 +68,14 @@ module.exports = class YoutubeVideo extends Video
         });
     }
 
-    getRelated(dontRelate)
+    getRelated(dontRelate)  //TODO  :   FILTER NON MUSIC RESULTS IF POSSIBLE.
     {
         return new Promise((resolve, reject) => {
             youTube.related(this.link, 5 , (err, result) => {
                 if(err) 
                     return reject(err);
-                let song = result.items.filter(r => dontRelate.indexOf(r.snippet.title) == -1).find(r => r.id.kind == "youtube#video");
-                if(!song)
-                    song = result.items.find(r => r.id.kind == "youtube#video");
+                let song =  result.items.filter(r => dontRelate.indexOf(r.snippet.title) == -1).find(r => r.id.kind == "youtube#video")
+                        ||  result.items.find(r => r.id.kind == "youtube#video");
                 if(!song)
                     return reject("No sound found.");
                 resolve({title: song.snippet.title, link: song.id.videoId, type: "youtube", startTime: 0, image: `https://img.youtube.com/vi/${song.id.videoId}/mqdefault.jpg`, url : `https://www.youtube.com/watch?v=${song.id.videoId}`});
