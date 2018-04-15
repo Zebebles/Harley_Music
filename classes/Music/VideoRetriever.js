@@ -44,7 +44,7 @@ module.exports = class VideoRetriever
             return this.youtubeByString(identifier);
     }
 
-    youtubeByString(identifier) //  SINGLE WILL BE SET IF WE JUST WANT TO RETRIEVE ONE TRACK, OTHERWISE IT'LL GET 5.
+    youtubeByString(identifier, justMusic) //  SINGLE WILL BE SET IF WE JUST WANT TO RETRIEVE ONE TRACK, OTHERWISE IT'LL GET 5.
     {
         let auth = this.auth;
 
@@ -64,7 +64,7 @@ module.exports = class VideoRetriever
             snekfetch.get('https://www.googleapis.com/youtube/v3/search'
                             +'?part=snippet'
                             +'&type=video'
-                            +'&videoCategoryId=10'  //  MUSIC IS CATEGORY 10
+                            +(justMusic ? '&videoCategoryId=10' : "")   //  MUSIC IS CATEGORY 10. ONLY FILTERS OUT NON MUSIC RESUTS IF SPECIFIED BY VAR
                             +'&key=' + auth.googleKey
                             +'&maxResults=5'
                             +'&q=' + encodeURIComponent(identifier))
