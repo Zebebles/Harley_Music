@@ -16,6 +16,20 @@ module.exports = class VideoRetriever
         this.client = playlist.guild.client;
         this.auth = playlist.auth;
         ytas = new yta(playlist.auth.googleKey);
+
+        //  INITIATE THE SPOTIFY AUTH IF IT HASN'T ALREADY BEEN INITIATED
+        if(!client.spotify)
+        {
+            client.spotify = new spotify({
+                clientId: auth.spotifyId,
+                clientSecret: auth.spotifySecret
+            });
+
+            client.spotify.clientCredentialsGrant().then(data => {
+                client.spotify.expiry = Date.now() + data.body['expires_in'];
+                client.spotify.setAccessToken(data.body['access_token']);
+            });
+        }
     }
 
     retrieveSongs(identifier) // RETURNS A PROMISE WITH AN ARRAY OF SONG OBJECTS RETRIEVED FROM THE IDENTIFIER, AND PLAYLIST INFO.  I.E. THEN(TRACKS, PLAYLISTINFO)
@@ -242,7 +256,6 @@ module.exports = class VideoRetriever
             function authorize()
             {
                 return new Promise((resolve, reject) => {
-                    let client = this.playlist.guild.client;
                     if(!client.spotify.expiry || client.spotify.expiry-200 < Date.now()){   /*  RE-AUTHORIZE SPOTIFY IF NEED BE.    */
                         return client.spotify.clientCredentialsGrant().then(data => 
                         {

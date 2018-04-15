@@ -1,10 +1,8 @@
 const myClient = require("./classes/client.js");
 let auth = require("./resources/auth.json");
 const Playlist = require("./classes/Music/Playlist.js");
-const spotify = require("spotify-web-api-node");
 let snekfetch = require("snekfetch");
 const fs = require('fs');
-const fetch = require("node-fetch");
 const express = require("express");
 const Discord = require("discord.js");
 
@@ -78,19 +76,6 @@ snekfetch.get("http://"+auth.webserver+"/servers/register?pw=" + auth.password +
             */
             bot.guilds.forEach(g => 
                 g.playlist = new Playlist(g));
-
-            /*
-                Authorize the spotify oauth2 client.
-            */
-            bot.spotify = new spotify({
-                clientId: auth.spotifyId,
-                clientSecret: auth.spotifySecret
-            });
-
-            bot.spotify.clientCredentialsGrant().then(data => {
-                bot.spotify.expiry = Date.now() + data.body['expires_in'];
-                bot.spotify.setAccessToken(data.body['access_token']);
-            });
 
             /*
                 Update the commands list for the website to read from.
