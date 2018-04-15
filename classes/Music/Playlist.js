@@ -78,10 +78,7 @@ module.exports = class Playlist{
         else
             throw Error("Valid song types are: 'youtube', 'soundcloud', 'spotify' or 'partial'");
 
-        if(first)
-            this.queue.addAt(song, 1);
-        else
-            this.queue.add(vid);
+        this.queue.add(vid,first);
     }
 
     next()

@@ -69,19 +69,14 @@ module.exports = class Queue
         this.songs = ["filler"];
     }
 
-    add(song)  //  ADDS A SONG TO THE ARRAY
+    add(song, first)  //  ADDS A SONG TO THE ARRAY
     {
         if(!song || !(song instanceof Video))
-            return Error ("Must provide a song to add, and the song must be an instance of Video class");
-        this.songs.push(song);
-    }
-
-    addAt(song, ind)
-    {
-        if(!song || !(song instanceof Video))
-            return Error ("Must provide a song to add, and the song must be an instance of Video class");
-        ind = ind && !isNaN(parseInt(ind)) ? parseInt(ind) : this.songs.length-1;
-        this.songs.splice(ind, 0, song);
+            throw Error ("Must provide a song to add, and the song must be an instance of Video class");
+        if(first)
+            this.songs.splice(1, 0, song);
+        else
+            this.songs.push(song);
     }
 
     remove(song, amount)    //  SONG CAN BE A VIDEO OR A STRING THAT IDENTIFIES THE VIDEO (TITLE)
