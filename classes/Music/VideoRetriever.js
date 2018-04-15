@@ -190,7 +190,7 @@ module.exports = class VideoRetriever
         let client = this.client;
         return new Promise(function(resolve, reject)
         {
-            authorize.then( () => {
+            authorize().then( () => {
                 if(url.match(/user(\/|:)/g) && url.match(/playlist(\/|:)/g))
                     return playlist(url.match(/user(\/|:).[^\/:\s?]*/g)[0].replace(/user(\/|:)/g, ""),
                                 url.match(/playlist(\/|:).[^\/:\s?]*/g)[0].replace(/playlist(\/|:)/g,""));
