@@ -45,8 +45,8 @@ module.exports = class Remove extends DBF.Command{
             return msg.channel.send("Couldn't find a track to remove under `" + args.substr(0, 100) + "`").catch(err => console.log(err));
 
         playlist.queue.remove(track);
-        msg.channel.send("", {  title: "Track removed from queue",  color: msg.guild.me.displayColor,
-                                description: track.title,   thumbnail: track.image})
+        msg.channel.send("", {embed: {  title: "Track removed from queue",  color: msg.guild.me.displayColor,
+                                description: track.title,   thumbnail: track.image}})
                         .catch(err => console.log(err));
         
     }
