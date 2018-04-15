@@ -67,7 +67,7 @@ module.exports = class Hello extends DBF.Command{
         let qm = msg.channel.send("",{embed: {title: "🔎 Searching for song/playlist ...", color: msg.guild.me.displayColor}}).then(qm =>   
         {
             msg.guild.playlist.messageManager.queueMessage = qm;
-            msg.guild.playlist.retriever.retrieveSongs(args).then(function(result)  /*  THIS CALLS THE VideoRetriever CLASS AND TRIES TO RETRIEVE A SONG/PLAYLIST FROM THE COMMAND ARGS.
+            msg.guild.playlist.retriever.search(args).then(function(result)  /*  THIS CALLS THE VideoRetriever CLASS AND TRIES TO RETRIEVE A SONG/PLAYLIST FROM THE COMMAND ARGS.
                                                                                         RESULT IS AN OBEJECT THEMED AS FOLLOWS: {   songs  :   [] (array of songs found),
                                                                                                                                     title  :   playlist title (only present if a playlist is returned),
                                                                                                                                     tracks :   the number of tracks in the playlist (only present if playlist is returned)

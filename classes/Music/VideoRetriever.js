@@ -32,7 +32,7 @@ module.exports = class VideoRetriever
         }
     }
 
-    retrieveSongs(identifier) // RETURNS A PROMISE WITH AN ARRAY OF SONG OBJECTS RETRIEVED FROM THE IDENTIFIER, AND PLAYLIST INFO.  I.E. THEN(TRACKS, PLAYLISTINFO)
+    search(identifier) // RETURNS A PROMISE WITH AN ARRAY OF SONG OBJECTS RETRIEVED FROM THE IDENTIFIER, AND PLAYLIST INFO.  I.E. THEN(TRACKS, PLAYLISTINFO)
     {
         if(identifier.toLowerCase().match(/soundcloud.com\//gi))
             return this.soundcloud(identifier);
