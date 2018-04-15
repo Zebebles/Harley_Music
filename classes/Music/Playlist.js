@@ -52,7 +52,7 @@ module.exports = class Playlist{
                             if(conn.dispatcher)
                             {
                                 conn.dispatcher.pause();
-                                conn.dispatcher.resume();
+                                setTimeout(() => conn.dispatcher.resume(),50);
                             }
                         },250);
                     }
