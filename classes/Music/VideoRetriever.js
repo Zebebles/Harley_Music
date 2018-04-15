@@ -21,8 +21,8 @@ module.exports = class VideoRetriever
         if(!this.client.spotify)
         {
             this.client.spotify = new spotify({
-                clientId: auth.spotifyId,
-                clientSecret: auth.spotifySecret
+                clientId: this.auth.spotifyId,
+                clientSecret: this.auth.spotifySecret
             });
 
             this.client.spotify.clientCredentialsGrant().then(data => {
