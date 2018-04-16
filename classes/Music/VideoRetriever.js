@@ -83,9 +83,9 @@ module.exports = class VideoRetriever
         return new Promise(function(resolve, reject)
         {
             if(identifier.match(/[?&]list=/gi))
-                return playlist(identifier.match(/[?&]list=.[^&\S]*/gi)[0].replace(/[?&]list=/gi, ""));
+                return playlist(identifier.match(/[?&]list=.[^&\s]*/gi)[0].replace(/[?&]list=/gi, ""));
             else if(identifier.match(/[?&]v=/gi))
-                return track(identifier.match(/[?&]v=.[^&\S]*/gi)[0].replace(/[?&]v=/gi, ""));
+                return track(identifier.match(/[?&]v=.[^&\s]*/gi)[0].replace(/[?&]v=/gi, ""));
             else
                 return reject({friendly: "That isn't a valid youtbe URL"});
 
