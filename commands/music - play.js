@@ -154,8 +154,8 @@ module.exports = class Hello extends DBF.Command{
                         let choice = collected.content.match(/\d{1}/g);
                         if(!choice || !choice.length)
                             return reject({friendly: "That isn't a valid choice."});
-                        choice = parseInt(choice[0]);
-                        if(choice > songs.length || choice < 0)
+                        choice = parseInt(choice[0])-1;
+                        if(isNaN(choice) || choice > songs.length || choice < 0)
                             return reject({friendly: "That isn't a valid choice."});
     
                         resolve(songs[choice]);
