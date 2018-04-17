@@ -17,11 +17,11 @@ module.exports = class Hello extends DBF.Command{
              triggers: ["p"],
              group: "Music",
              ownerOnly : false,
-             description: "Plays a YouTube, Spotify, or Soundcloud song/playlist in the voice channel. -next will add the song to the top of the queue. -choose will let you choose 1 of the first 5 search results.",
-             example: ">>play song_name or url (-choose) (-shuffle) (-next)\n>>play never gonna give you up (-next)  (-shuffle) (-choose)\n>>play youtube_url (-next) (-shuffle) \n>>play spotify_url (-next) (-shuffle) \n>>play soundcloud_url  (-shuffle) (-next)",             
+             description: "Plays a YouTube, Spotify, or Soundcloud song/playlist in the voice channel.",
+             example: ">>play song_name or url (-choose) (-shuffle) (-next)\n>>play never gonna give you up (-next) (-shuffle) (-choose)\n>>play youtube_url (-next) (-shuffle) \n>>play spotify_url (-next) (-shuffle) \n>>play soundcloud_url (-shuffle) (-next)",             
              guildOnly : true,
              reqArgs: true,
-             reqBotPerms : ["CONNECT", "SPEAK", "EMBED_LINKS", "MANAGE_MESSAGES", "ATTACH_FILES"]
+             reqBotPerms : ["CONNECT", "SPEAK", "EMBED_LINKS", "MANAGE_MESSAGES"]
         });
     }
 
