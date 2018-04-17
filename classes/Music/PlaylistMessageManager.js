@@ -117,7 +117,7 @@ module.exports = class PlaylistMessageManager
     {
         var embed = new MessageEmbed();
         embed.description = "**Title\t-**\t`" + song.title + "`" + (song.tracks ? "\n**Tracks\t-**\t`" + song.tracks + "`": "\n**Position\t-**\t`" + this.playlist.queue.positionOf(song.title) + "`");
-        embed.title = song.tracks ? ":notes: Playlist/Albm added to queue" : ":musical_note: Track added to queue";
+        embed.title = song.tracks ? ":notes: Playlist/Album added to queue" : ":musical_note: Track added to queue";
         embed.setThumbnail(song.image ? song.image : song.songs[0].image);
         embed.setColor(msg.guild.me.displayColor);
         
