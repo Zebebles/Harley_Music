@@ -21,7 +21,7 @@ module.exports = class Hello extends DBF.Command{
              example: ">>play song_name or url (-choose) (-shuffle) (-next)\n>>play never gonna give you up (-next)  (-shuffle) (-choose)\n>>play youtube_url (-next) (-shuffle) \n>>play spotify_url (-next) (-shuffle) \n>>play soundcloud_url  (-shuffle) (-next)",             
              guildOnly : true,
              reqArgs: true,
-             reqBotPerms : ["CONNECT", "SPEAK", "EMBED_LINKS", "MANAGE_MESSAGES", "ADD_REACTIONS"]
+             reqBotPerms : ["CONNECT", "SPEAK", "EMBED_LINKS", "MANAGE_MESSAGES", "ATTACH_FILES"]
         });
     }
 

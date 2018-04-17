@@ -93,7 +93,7 @@ module.exports = class PlaylistMessageManager
                 this.message = msg;
                 this.collector = new ReactionCollector(msg, this.filter).on("collect", this.onCollect); 
                 this.addReactions();
-            }).catch(err => err);
+            }).catch(err => console.log("Error sending initial NP message\n" + err));
         }
         else if(this.textChannel.lastMessage.id != this.message.id)
         {
@@ -101,7 +101,7 @@ module.exports = class PlaylistMessageManager
             this.textChannel.send("",{embed: this.embed}).then(msg => {
                 this.message = msg;
                 this.addReactions();
-            }).catch(err => console.log(err));
+            }).catch(err => console.log("Error sending NP message after deleting old one.\n" + err));
         }
         else
             this.message.edit("",{embed: this.embed})
@@ -109,7 +109,7 @@ module.exports = class PlaylistMessageManager
                     this.textChannel.send("",{embed: this.embed}).then(msg => {
                         this.message = msg;
                         this.addReactions();
-                    }).catch(err => console.log(err))
+                    }).catch(err => console.log("Error sending NP message after edit failed.\n" + err))
                 });
     }
 
