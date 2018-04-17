@@ -144,7 +144,7 @@ module.exports = class Playlist{
             .on("error", (err) => this.handleError(err))
             .on("disconnect", (err) => this.handleError(err))
             .on("failed", (err) => this.handleError(err))
-        }).catch((err) => this.handleError(err));
+        }).catch((err) => this.next());
     }
 
     pause()
