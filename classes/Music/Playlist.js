@@ -23,7 +23,7 @@ module.exports = class Playlist{
         if(error)
             console.log(error);
         if(this.dispatcher)
-            this.dispatcher.destroy("stopped");
+            this.dispatcher.destroy();
         this.dispatcher = null;
         this.auto = false;
         this.dontRelate = [];
