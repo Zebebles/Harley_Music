@@ -5,6 +5,7 @@ module.exports = class PlaylistMessageManager
     constructor(playlist)
     {
         this.reactions = [  {emoji: "🛑", run: playlist.guild.client.commands.find(cmd => cmd.areYou("stop")).run},
+                            {emoji: "⏮", run: playlist.guild.client.commands.find(cmd => cmd.areYou("prev")).run}, 
                             {emoji: "⏯", run: playlist.guild.client.commands.find(cmd => cmd.areYou("pause")).run},
                             {emoji: "⏭", run: playlist.guild.client.commands.find(cmd => cmd.areYou("skip")).run}, 
                             {emoji: "🔀", run: playlist.guild.client.commands.find(cmd => cmd.areYou("shuffle")).run}
