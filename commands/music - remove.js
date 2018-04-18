@@ -33,20 +33,22 @@ module.exports = class Remove extends DBF.Command{
             {
                 let start = args.match(/\d+/g)[0];
                 let end = args.match(/\d+/g)[1];
-                if(start < 1 || end > msg.guild.playlist.queue.length-1)
-                    return msg.channel.send("Please provide a range between `1** and `" + (msg.guild.playlist.queue.length-1) + "`").catch(err => console.log(err));
+                if(start < 1 || end > msg.guild.playlist.queue.left)
+                    return msg.channel.send("Please provide a range between `1** and `" + (msg.guild.playlist.queue.left-1) + "`").catch(err => console.log(err));
 
                 playlist.queue.remove(start, (end-start)+1);
                 return msg.channel.send("Removed `" + ((end-start)+1) + "` tracks from the queue!").catch(err => console.log(err));
             }
-            track = playlist.queue.songAt(args.match(/\d+/g)[0]);
+            track = args.match(/\d+/g)[0];
         }
-        if(!track)
+
+        let removed = playlist.queue.remove(track);
+
+        if(!removed)
             return msg.channel.send("Couldn't find a track to remove under `" + args.substr(0, 100) + "`").catch(err => console.log(err));
 
-        playlist.queue.remove(track);
-        msg.channel.send("", {embed: {  title: "Track removed from queue",  color: msg.guild.me.displayColor,
-                                description: track.title,   thumbnail: track.image}})
+        msg.channel.send("", {embed: new Discord.MessageEmbed({  title: "Track removed from queue",  color: msg.guild.me.displayColor,
+                                description: removed[0].title}).setThumbnail(removed[0].image)})
                         .catch(err => console.log(err));
         
     }
