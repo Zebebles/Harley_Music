@@ -7,6 +7,7 @@ module.exports = class Queue
         this.playlist = playlist;
         this.songs = ["filler"];
         this.index = -1;
+        this.loop = 0;
     }
 
     get current()
@@ -73,8 +74,6 @@ module.exports = class Queue
             throw Error("Number must be positive");
         else if(!isNaN(number))
             toDecrement += number;
-        else if(this.playlist.dispatcher && this.playlist.dispatcher.time > 10000)  //  IF THE DISPATCHER HAS BEEN PLAYING FOR OVER 10 SECONDS, GO BACK TO THE START OF THE SONG.
-            toDecrement = 1;
         this.index -= toDecrement;
         if(this.index < -1)
             this.index = -1;
