@@ -27,7 +27,7 @@ module.exports = class Queue
 
     get left()
     {
-        return this.songs.length - this.index + (this.loop ? `\`(LOOPING x ${this.loop})\`` : "");
+        return this.songs.length - this.index + (this.loop ? ` \`(LOOPING x ${this.loop})\`` : "");
     }
 
     songAt(ind) //  RETURNS THE SONG AT THE IND PROVIDED.
