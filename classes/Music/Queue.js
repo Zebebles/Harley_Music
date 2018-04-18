@@ -73,7 +73,7 @@ module.exports = class Queue
         if(!isNaN(number) && number < 0)
             throw Error("Number must be positive");
         else if(!isNaN(number))
-            toDecrement += number;
+            toDecrement = 1+number;
         this.index -= toDecrement;
         if(this.index < -1)
             this.index = -1;
