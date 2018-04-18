@@ -25,7 +25,7 @@ module.exports = class Hello extends DBF.Command{
         let skipped = msg.guild.playlist.queue.prev(incrementN)-1;
         
         if(skipped > 1)
-            msg.channel.send(`:track_next: Going back \`${skipped}\` tracks as requested by **${msg.member.displayName}**`).catch(err => console.log(err));
+            msg.channel.send(`:track_previous: Going back \`${skipped}\` tracks as requested by **${msg.member.displayName}**`).catch(err => console.log(err));
         
         msg.guild.playlist.dispatcher.destroy();
     }
