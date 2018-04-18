@@ -17,7 +17,7 @@ module.exports = class Queue
 
     get empty() //  RETURNS A BOOLEAN THAT SIGNIFIES IF THE QUEUE IS EMPTY OR NOT.
     {
-        return (this.songs.length == 0 || this.songs[0] == "filler" || this.left <= 0) ? true : false;
+        return (this.songs.length == 0 || this.songs[0] == "filler" || this.left <= 0 || this.index >= this.songs.length) ? true : false;
     }
 
     get length()
