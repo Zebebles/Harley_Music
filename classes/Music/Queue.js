@@ -27,7 +27,7 @@ module.exports = class Queue
 
     get left()
     {
-        return this.songs.length - this.index;
+        return this.songs.length - this.index+1;
     }
 
     songAt(ind) //  RETURNS THE SONG AT THE IND PROVIDED.

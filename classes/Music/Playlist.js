@@ -130,7 +130,7 @@ module.exports = class Playlist{
             ).on("end", reason => {
                 if(reason == "stopped")
                     return;
-                if(this.queue.left <= 1 && this.auto) 
+                if(this.queue.left <= 0 && this.auto) 
                     this.queue.current.getRelated(this.dontRelate).then(song => {
                         this.dontRelate.push(this.queue.current.title);
                         if(this.dontRelate.length > 5)
