@@ -136,7 +136,7 @@ module.exports = class Playlist{
                             this.dontRelate.splice(0,1);
                         this.queue.add(new YoutubeVideo(song, this));
                         this.next();
-                    }).catch(err => err != "Not youtube" ?  console.log(err) : null);
+                    }).catch(err => this.next());
                 else
                     this.next();
             })
