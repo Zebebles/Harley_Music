@@ -60,9 +60,11 @@ module.exports = class Queue
             {
                 this.index = 0 + (this.index - this.songs.length);
                 this.loop--;
+                console.log("Loop more than 0")
             }
             else
                 this.clear();
+            console.log("Index greater than length.");
         }
     }
 
