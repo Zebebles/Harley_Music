@@ -56,7 +56,7 @@ module.exports = class Queue
 
         if(this.index >= this.songs.length)
         {
-            if(this.loop)
+            if(this.loop > 0)
             {
                 this.index = 0 + (this.index - this.songs.length);
                 this.loop--;
@@ -104,6 +104,7 @@ module.exports = class Queue
     {
         this.songs = ["filler"];
         this.index = -1;
+        this.loop = 0;
     }
 
     add(song, first)  //  ADDS A SONG TO THE ARRAY
