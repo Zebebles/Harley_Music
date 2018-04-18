@@ -69,13 +69,15 @@ module.exports = class Queue
     prev(number)
     {
         let toDecrement = 2;
-        if(!isNaN(number) && (this.index - number < -1 || number < 0))
-            throw Error("Can't go back that many songs.");
+        if(!isNaN(number) && number < 0)
+            throw Error("Number must be positive");
         else if(!isNaN(number))
             toDecrement += number;
         else if(this.playlist.dispatcher && this.playlist.dispatcher.time > 10000)  //  IF THE DISPATCHER HAS BEEN PLAYING FOR OVER 10 SECONDS, GO BACK TO THE START OF THE SONG.
             toDecrement = 1;
         this.index -= toDecrement;
+        if(this.index < -1)
+            this.index = -1;
     }
 
     repeat() //  REPEATS THE CURRENT SONG
