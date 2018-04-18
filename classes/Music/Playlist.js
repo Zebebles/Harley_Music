@@ -23,7 +23,7 @@ module.exports = class Playlist{
         if(error)
             console.log(error);
         if(this.dispatcher)
-            this.dispatcher.destroy();
+            this.dispatcher.destroy("stopped");
         this.dispatcher = null;
         this.auto = false;
         this.dontRelate = [];
@@ -128,9 +128,9 @@ module.exports = class Playlist{
                 {   volume: 0.5,
                     bitrate: 64,    }
             ).on("end", reason => {
-                if(this.queue.empty)    //  WON'T RUN NEXT() WHEN STOP() STOPS THE DISPATCHER EARLY
+                if(reason == "stopped")
                     return;
-                if(this.queue.length == 1 && this.auto) 
+                if(this.queue.left <= 1 && this.auto) 
                     this.queue.current.getRelated(this.dontRelate).then(song => {
                         this.dontRelate.push(this.queue.current.title);
                         if(this.dontRelate.length > 5)
