@@ -11,7 +11,7 @@ module.exports = class Queue
 
     get current()
     {
-        return this.songs.length && this.index != -1 ? this.songs[0] : null;
+        return this.songs.length && this.index != -1 ? this.songs[this.index] : null;
     }
 
     get empty() //  RETURNS A BOOLEAN THAT SIGNIFIES IF THE QUEUE IS EMPTY OR NOT.
@@ -109,6 +109,9 @@ module.exports = class Queue
             this.songs.splice(this.index+1, 0, song);
         else
             this.songs.push(song);
+
+        if(this.songs[0] == "filler")
+            this.songs.splice(0,1);
     }
 
     remove(song, amount)    //  SONG CAN BE A VIDEO OR A STRING THAT IDENTIFIES THE VIDEO (TITLE)
