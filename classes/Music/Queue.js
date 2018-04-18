@@ -84,7 +84,7 @@ module.exports = class Queue
             this.songs.splice(0,0,this.songs[this.index]);
     }
 
-    loop()
+    doLoop()
     {
         this.loop++;
         return this.loop;
