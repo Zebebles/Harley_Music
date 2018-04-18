@@ -62,6 +62,8 @@ module.exports = class Queue
                 this.loop--;
             }
         }
+
+        return number || 1;
     }
 
     prev(number)

@@ -20,7 +20,8 @@ module.exports = class Hello extends DBF.Command{
         let validation = msg.guild.playlist.validateCommand(msg,true);
         if(validation)
             return msg.channel.send(validation).catch(err => console.log(err));
-        incrementN = parseInt(args) ? parseInt(args) : 1;
+        incrementN = parseInt(args);
+        incrementN = incrementN && incrementN > 0 ? incrementN : 1; 
         msg.channel.send(`:track_next: Going back \`${msg.guild.playlist.queue.prev(incrementN)-1}\` tracks as requested by **${msg.member.displayName}**`).catch(err => console.log(err));
         msg.guild.playlist.dispatcher.destroy();
     }
