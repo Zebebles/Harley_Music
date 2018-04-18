@@ -95,7 +95,7 @@ module.exports = class PlaylistMessageManager
                 this.addReactions();
             }).catch(err => console.log("Error sending initial NP message\n" + err));
         }
-        else if(this.textChannel.lastMessage.id != this.message.id)
+        else if(!this.textChannel.lastMessage || this.textChannel.lastMessage.id != this.message.id)
         {
             this.message.delete().catch(err => err);
             this.textChannel.send("",{embed: this.embed}).then(msg => {
