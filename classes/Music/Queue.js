@@ -58,6 +58,7 @@ module.exports = class Queue
             else
                 this.clear();
         }
+        console.log(this.index);
     }
 
     prev(number)
