@@ -58,7 +58,9 @@ module.exports = class PlaylistMessageManager
         this.message ? this.message.react(this.reactions[0].emoji).catch(e => e).then(() => {
             this.message ? this.message.react(this.reactions[1].emoji).catch(e => e).then(() => {
                 this.message ? this.message.react(this.reactions[2].emoji).catch(e => e).then(() => {
-                    this.message ? this.message.react(this.reactions[3].emoji).catch(e => e) : null;
+                    this.message ? this.message.react(this.reactions[3].emoji).catch(e => e).then(() => {
+                        this.message ? this.message.react(this.reactions[4].emoji).catch(e => e) : null;
+                    }) : null;
                 }) : null;
             }) : null;
         }) : null;
