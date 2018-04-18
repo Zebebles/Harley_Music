@@ -47,8 +47,8 @@ module.exports = class Queue
 
     next(number)  //  MOVES THE QUEUE FORWARD BY ONE POSITION UNLESS NUMBER IS PROVIDED, THEN IT WILL SKIP NUMBER SONGS.
     {
-        if(!isNaN(number) && ((!this.loop && this.index + number > this.songs.length) || number < 0))
-            throw Error("Number provided either isnt a number or is more songs that there are in the queue.");
+        if(!isNaN(number) && number < 0)
+            throw Error("Can't skip that many songs.");
         else if(!isNaN(number))
             this.index += number;
         else
