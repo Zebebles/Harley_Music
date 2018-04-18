@@ -129,7 +129,7 @@ module.exports = class Playlist{
                 {   volume: 0.5,
                     bitrate: 64,    }
             ).on("end", reason => {
-                if(this.queue.left <= 0 && this.auto) 
+                if(this.queue.left <= 0 && this.auto && !this.queue.loop) 
                     this.queue.current.getRelated(this.dontRelate).then(song => {
                         this.dontRelate.push(this.queue.current.title);
                         if(this.dontRelate.length > 5)
