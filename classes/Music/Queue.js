@@ -61,8 +61,6 @@ module.exports = class Queue
                 this.index = 0 + (this.index - this.songs.length);
                 this.loop--;
             }
-            else
-                this.clear();
         }
     }
 
