@@ -74,6 +74,7 @@ module.exports = class Queue
         this.index -= toDecrement;
         if(this.index < -1)
             this.index = -1;
+        return toDecrement;
     }
 
     repeat() //  REPEATS THE CURRENT SONG
