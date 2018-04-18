@@ -21,7 +21,7 @@ module.exports = class Hello extends DBF.Command{
         let validation = msg.guild.playlist.validateCommand(msg,true);
         if(validation)
             return msg.channel.send(validation).catch(err => console.log(err));
-        msg.channel.send(":repeat: The queue will now be played `" + playlist.queue.doLoop() + "` times.").catch(err => console.log(err));
+        msg.channel.send(":repeat: The queue will now be played `" + playlist.queue.doLoop() + "` more times.").catch(err => console.log(err));
     }
 
 }
