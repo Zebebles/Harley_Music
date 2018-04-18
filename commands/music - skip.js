@@ -23,7 +23,7 @@ module.exports = class Hello extends DBF.Command{
         incrementN = parseInt(args);
         incrementN = incrementN && incrementN > 0 ? incrementN : 1; 
         
-        if(incrementN > 0) 
+        if(incrementN > 1) 
         {
             msg.channel.send(`:track_next: Skipping \`${incrementN}\` tracks as requested by **${msg.member.displayName}**`).catch(err => console.log(err));
             msg.guild.playlist.queue.next(incrementN-1);    //  -1 BECAUSE ONE WILL BE SKIPPED ON PLAYLIST.NEXT();
