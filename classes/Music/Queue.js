@@ -17,7 +17,7 @@ module.exports = class Queue
 
     get empty() //  RETURNS A BOOLEAN THAT SIGNIFIES IF THE QUEUE IS EMPTY OR NOT.
     {
-        return (!this.songs.length || this.songs[0] == "filler" || this.index > this.songs.length-1) ? true : false;
+        return (this.songs.length == 0 || this.songs[0] == "filler" || this.left == 0) ? true : false;
     }
 
     get length()
@@ -60,11 +60,9 @@ module.exports = class Queue
             {
                 this.index = 0 + (this.index - this.songs.length);
                 this.loop--;
-                console.log("Loop more than 0")
             }
             else
                 this.clear();
-            console.log("Index greater than length.");
         }
     }
 
