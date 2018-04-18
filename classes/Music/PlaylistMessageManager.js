@@ -70,7 +70,7 @@ module.exports = class PlaylistMessageManager
         this.embed.title = (this.playlist.dispatcher && this.playlist.dispatcher.paused ? ":pause_button: " : ":arrow_forward: ") + song.title;
         this.embed.setImage(song.image);
         this.embed.fields.find(field => field.name == "Duration").value = this.getDurationString(song.duration);
-        this.embed.fields.find(field => field.name == "Songs Left").value = this.playlist.queue.length;
+        this.embed.fields.find(field => field.name == "Songs Left").value = this.playlist.queue.left;
     }
 
     update(endedEmbed)
