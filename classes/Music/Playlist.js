@@ -22,6 +22,7 @@ module.exports = class Playlist{
     {
         if(error)
             console.log(error);
+        this.dispatcher.removeAllListeners();
         if(this.dispatcher)
             this.dispatcher.destroy();
         this.dispatcher = null;
