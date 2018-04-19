@@ -29,6 +29,9 @@ module.exports = class Hello extends DBF.Command{
             msg.guild.playlist.queue.next(incrementN-1);    //  -1 BECAUSE ONE WILL BE SKIPPED ON PLAYLIST.NEXT();
         }
 
-        msg.guild.playlist.dispatcher.destroy();
+        if(msg.guild.playlist.dispatcher)
+            msg.guild.playlist.dispatcher.destroy();
+        else
+            msg.guild.playlist.next();
     }
 }
