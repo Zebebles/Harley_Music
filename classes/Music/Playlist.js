@@ -22,9 +22,9 @@ module.exports = class Playlist{
     {
         if(error)
             console.log(error);
-        this.dispatcher.removeAllListeners();
         if(this.dispatcher)
-            this.dispatcher.destroy();
+            this.dispatcher.removeAllListeners()
+                            .destroy();            
         this.dispatcher = null;
         this.auto = false;
         this.dontRelate = [];
