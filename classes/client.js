@@ -65,7 +65,7 @@ class myClient extends DBF.Client {
                 status.connlist.push({
                     id: conn.channel.guild.id,
                     guild: conn.channel.guild.name,
-                    length: conn.channel.guild.playlist.queue.length,
+                    length: conn.channel.guild.playlist.queue.left,
                     members: conn.channel.members.size
                 }));
         snekfetch.post("http://"+this.auth.webserver + "/servers/status")
