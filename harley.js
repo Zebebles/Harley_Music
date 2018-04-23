@@ -41,6 +41,7 @@ snekfetch.get(auth.webserver+"/servers/register?pw=" + auth.password + "&type=mu
             else
                 res.sendStatus(401);    //send an unauthorised error.
         });
+        console.log(req);
 
         bot.express.listen(3005);
 
