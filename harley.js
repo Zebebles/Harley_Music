@@ -33,7 +33,6 @@ snekfetch.get(auth.webserver+"/servers/register?pw=" + auth.password + "&type=mu
         bot.express = express();
         bot.express.use(function(req, res, next)
         {
-            console.log(req);
             res.header('Access-Control-Allow-Origin', "*");
             if(req.ip == "::ffff:" + auth.sqlServer || req.ip == "::1")//if the request is from localhost or webserver
             {
