@@ -68,7 +68,7 @@ class myClient extends DBF.Client {
                     length: conn.channel.guild.playlist.queue.left,
                     members: conn.channel.members.size
                 }));
-        snekfetch.post("http://"+this.auth.webserver + "/servers/status")
+        snekfetch.post("https://"+this.auth.webserver + "/servers/status")
                 .send({status})
                 .end()
                 .catch(err => {
@@ -79,10 +79,10 @@ class myClient extends DBF.Client {
 
     register(){
         return new Promise((resolve, reject) => {
-            snekfetch.get("http://"+auth.webserver+"/servers/register?pw=" + auth.password).then(response => {
+            snekfetch.get("https://"+auth.webserver+"/servers/register?pw=" + auth.password).then(response => {
                 if(response.status != 200)
                     return console.log("Error re-registering server");
-                snekfetch.get("http://"+auth.webserver + "/servers/auth").then(authResponse => {
+                snekfetch.get("https://"+auth.webserver + "/servers/auth").then(authResponse => {
                     if(authResponse.status != 200)
                         return console.log("Error fetching auth.");
                     this.auth = JSON.parse(authResponse.text);
