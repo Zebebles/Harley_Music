@@ -33,6 +33,7 @@ snekfetch.get(auth.webserver+"/servers/register?pw=" + auth.password + "&type=mu
         bot.express = express();
         bot.express.use(function(req, res, next)
         {
+            console.log(req);
             res.header('Access-Control-Allow-Origin', "*");
             if(req.ip == "::ffff:" + auth.webserver.split(":")[0] || req.ip == "::1")//if the request is from localhost or webserver
             {
@@ -41,7 +42,6 @@ snekfetch.get(auth.webserver+"/servers/register?pw=" + auth.password + "&type=mu
             else
                 res.sendStatus(401);    //send an unauthorised error.
         });
-        console.log(req);
 
         bot.express.listen(3005);
 
