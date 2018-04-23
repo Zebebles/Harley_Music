@@ -93,7 +93,7 @@ class myClient extends DBF.Client {
 
     loadUsers(client){
         var conn = mysql.createConnection({
-            host: this.auth.webserver.split(":")[0],
+            host: this.auth.sqlServer,
             user: "root",
             password: this.auth.password
         });
@@ -112,7 +112,7 @@ class myClient extends DBF.Client {
     loadUser(user)
     {
         var conn = mysql.createConnection({
-            host: this.auth.webserver.split(":")[0],
+            host: this.auth.sqlServer,
             user: "root",
             password: this.auth.password
         });
@@ -130,7 +130,7 @@ class myClient extends DBF.Client {
     
     loadGuilds(guilds) {
         var conn = mysql.createConnection({
-            host: this.auth.webserver.split(":")[0],
+            host: this.auth.sqlServer,
             user: "root",
             password: this.auth.password
         });
