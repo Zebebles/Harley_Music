@@ -18,7 +18,7 @@ module.exports = class Hello extends DBF.Command{
         let msg = params.msg;
         const ytas = new yta(msg.client.auth.googleKey);
         if(!msg.author.donationTier)
-            return msg.channel.send("This command has been made Donator-only, due to the fact that you could theoretically play songs forever with it.\nVisit **<http://www.harleybot.me/donate/>** for more information.");
+            return msg.channel.send("This command has been made Donator-only, due to the fact that you could theoretically play songs forever with it.\nVisit **<http://www.harleybot.me/#/donate/>** for more information.");
         let validation = msg.guild.playlist.validateCommand(msg, true);
         if(validation)
             return msg.channel.send(validation).catch(err => console.log(err));
