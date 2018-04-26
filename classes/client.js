@@ -28,12 +28,6 @@ class myClient extends DBF.Client {
             channel.disabledCommands = new Array();
         });
 
-        this.on("channelDelete", channel => 
-        {
-            if (channel.disableCommands)
-                channel.disabledCommands.forEach(cmd => this.enableCommand(channel.guild, channel.id, cmd));
-        });
-
         this.on("guildDelete", guild => 
         {
             this.sendStatus(true);
