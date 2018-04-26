@@ -128,7 +128,7 @@ module.exports = class Queue
         if(song instanceof Video && songs.find(s => s == song))
             removed = songs.splice(songs.lastIndexOf(song), 1);
         else if(isNaN(song)) //IF SONG IS NOT A NUMBER (PROBABLY A STRING)
-            removed = songs.splice(songs.lastIndexOf(findSong(song)),1);
+            removed = songs.splice(songs.lastIndexOf(this.findSong(song)),1);
         else
         {
             if(amount && !isNaN(amount))
