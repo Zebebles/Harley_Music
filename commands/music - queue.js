@@ -24,6 +24,8 @@ module.exports = class Queue extends DBF.Command{
         let validation = msg.guild.playlist.validateCommand(msg,true);
         if(validation)
             return msg.channel.send(validation).catch(err => console.log(err));
+        if(playlise.queue.left == 0)
+            return msg.channel.send("There aren't any tracks queued.");
         let page;
         if(args) page = parseInt(args);
         if(!page || isNaN(page)) page = 1;
