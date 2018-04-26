@@ -125,10 +125,11 @@ module.exports = class Queue
     {                       //  OR AN ARRAY INDEX.  IF SONG IS AN ARRAY INDEX AND AMOUNT IS SET, THEN THE AMOUNT OF SONGS WILL BE REMOVED STARTING AT SONGS[SONG]
         let songs = this.songs.splice(1,this.songs.length-1);
         let removed;
+        let findSong = this.findSong;
         if(song instanceof Video && songs.find(s => s == song))
             removed = songs.splice(songs.lastIndexOf(song), 1);
         else if(isNaN(song)) //IF SONG IS NOT A NUMBER (PROBABLY A STRING)
-            removed = songs.splice(songs.lastIndexOf(this.findSong(song)),1);
+            removed = songs.splice(songs.lastIndexOf(findSong(song)),1);
         else
         {
             if(amount && !isNaN(amount))
