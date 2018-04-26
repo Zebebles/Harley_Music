@@ -121,10 +121,19 @@ module.exports = class Queue
             this.songs.splice(0,1);
     }
 
-    remove(song, amount)    //  SONG CAN BE A VIDEO OR A STRING THAT IDENTIFIES THE VIDEO (TITLE)
-    {                       //  OR AN ARRAY INDEX.  IF SONG IS AN ARRAY INDEX AND AMOUNT IS SET, THEN THE AMOUNT OF SONGS WILL BE REMOVED STARTING AT SONGS[SONG]
+    remove(song)    //  SONG CAN BE A VIDEO OR A STRING THAT IDENTIFIES THE VIDEO (TITLE)
+    {      
+                         //  OR AN ARRAY INDEX.  IF SONG IS AN ARRAY INDEX AND AMOUNT IS SET, THEN THE AMOUNT OF SONGS WILL BE REMOVED STARTING AT SONGS[SONG]
         let songs = this.songs.slice(this.index+1, this.songs.length);
-        let removed = amount ? songs.splice(song, amount) : songs.splice(songs.lastIndexOf(this.find(song)), 1);
+        let removed;
+        if(song instanceof "string" && song.match(/\d+-\d+/g))
+        {
+            let start = songs.match(/\d+/g)[0];
+            let amount = start-songs.match(/\d+/g)[1];
+            removed = songs.splice(start, amount);
+        }
+        else
+            removed = songs.splice(songs.lastIndexOf(this.find(song)), 1);
         if(removed)
         {
             this.songs = this.songs.slice(0,this.index+1).concat(songs);

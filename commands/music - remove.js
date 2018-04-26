@@ -26,19 +26,7 @@ module.exports = class Remove extends DBF.Command{
         if(validation)
             return msg.channel.send(validation).catch(err => console.log(err));
 
-        let removed;
-
-        if(args.match(/\d+-\d+/g))
-        {
-            let start = args.match(/\d/g)[0];
-            let amount = start-args.match(/\d/g)[1];
-            if(start > songs.left || amount > songs.left)
-                removed = null;
-            else
-                removed = playlist.queue.remove(start, amount);
-        }
-        else
-            removed = playlist.queue.remove(args)
+        let removed = playlist.queue.remove(args)
 
         if(!removed)
             return msg.channel.send("Couldn't find a track to remove under `" + args.substr(0, 100) + "`").catch(err => console.log(err));
