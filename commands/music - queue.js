@@ -29,7 +29,7 @@ module.exports = class Queue extends DBF.Command{
         if(args) page = parseInt(args);
         if(!page || isNaN(page)) page = 1;
         page--;
-        let pages = Math.ceil(((playlist.queue.left-1)/5));
+        let pages = Math.ceil(((playlist.queue.left)/5));
         if(page >= pages)
             page = pages-1;
         
@@ -80,7 +80,7 @@ module.exports = class Queue extends DBF.Command{
             let message = "";
             let done = false;
             let ind = 0;
-            for(let i = 1+(5*page); i < 6+(5*page) && i < playlist.queue.length; i++){
+            for(let i = 1+(5*page); i < 6+(5*page) && i < playlist.queue.left+1; i++){
                 ind++;
                 message += "\n**" + i + "**\t-\t`" + playlist.queue.songAt(i).title + "`";
             }
