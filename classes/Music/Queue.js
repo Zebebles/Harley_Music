@@ -123,10 +123,9 @@ module.exports = class Queue
 
     remove(song, amount)    //  SONG CAN BE A VIDEO OR A STRING THAT IDENTIFIES THE VIDEO (TITLE)
     {                       //  OR AN ARRAY INDEX.  IF SONG IS AN ARRAY INDEX AND AMOUNT IS SET, THEN THE AMOUNT OF SONGS WILL BE REMOVED STARTING AT SONGS[SONG]
-        let songs = this.songs.splice(1,this.songs.length-1);
-        song = this.find(song);
-        let removed = song ? songs.splice(songs.indexOf(song), (amount || 1)) : null;
-        this.songs = [this.current].concat(songs);
+        let songs = this.songs.slice(this.index, this.songs.length);
+        let removed = amount ? songs.splice(song, amount) : songs.splice(songs.indexOf(this.find(song)), 1);
+        this.songs = this.songs.slice(0,this.index).concat(songs);
         return removed && removed.length ? removed : null; 
     }
 

@@ -25,24 +25,20 @@ module.exports = class Remove extends DBF.Command{
         let validation = msg.guild.playlist.validateCommand(msg,true);
         if(validation)
             return msg.channel.send(validation).catch(err => console.log(err));
-        let track;
-        if(!args.match(/\d+(-\d+)?/g) || args.replace(/\d+(-\d+)?/g,"") != "") /*   if args is not a number or a range of numbers (1-4)   */
-            track = playlist.queue.find(args)
-        else{
-            if(args.match(/\d+-\d+/g)) /*   if args is a range of numbers (i.e 1-4)  */
-            {
-                let start = args.match(/\d+/g)[0];
-                let end = args.match(/\d+/g)[1];
-                if(start < 1 || end > msg.guild.playlist.queue.left)
-                    return msg.channel.send("Please provide a range between `1** and `" + (msg.guild.playlist.queue.left-1) + "`").catch(err => console.log(err));
 
-                playlist.queue.remove(start, (end-start)+1);
-                return msg.channel.send("Removed `" + ((end-start)+1) + "` tracks from the queue!").catch(err => console.log(err));
-            }
-            track = args.match(/\d+/g)[0];
+        let removed;
+
+        if(args.match(/\d+-\d+/g))
+        {
+            let start = args.match(/\d/g)[0];
+            let amount = start-args.match(/\d/g)[1];
+            if(start > songs.left || amount > songs.left)
+                removed = null;
+            else
+                removed = playlist.queue.remove(start, amount);
         }
-
-        let removed = playlist.queue.remove(track);
+        else
+            removed = playlist.queue.remove(args)
 
         if(!removed)
             return msg.channel.send("Couldn't find a track to remove under `" + args.substr(0, 100) + "`").catch(err => console.log(err));
