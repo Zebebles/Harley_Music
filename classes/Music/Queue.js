@@ -128,8 +128,8 @@ module.exports = class Queue
         let removed;
         if(typeof song == "string" && song.match(/\d+-\d+/g))
         {
-            let start = songs.match(/\d+/g)[0];
-            let amount = start-songs.match(/\d+/g)[1];
+            let start = parseInt(song.match(/\d+/g)[0]);
+            let amount = start-parseInt(song.match(/\d+/g)[1]);
             removed = songs.splice(start, amount);
         }
         else
