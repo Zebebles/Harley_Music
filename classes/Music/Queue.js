@@ -32,6 +32,7 @@ module.exports = class Queue
 
     songAt(ind) //  RETURNS THE SONG AT THE IND PROVIDED.
     {
+        ind = parseInt(ind);
         return (ind == null || isNaN(ind) || (this.index+ind) >= this.songs.length || (this.index+ind) < 0) ? null : this.songs[this.index + ind];
     }
 
