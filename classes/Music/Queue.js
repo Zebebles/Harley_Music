@@ -42,7 +42,7 @@ module.exports = class Queue
 
     find(ident)
     {
-        return ident ? this.songAt(ident) || this.songs.find(song => song.title && song.title.toLowerCase().includes(ident.toLowerCase())) : null;
+        return ident ? this.songAt(ident) || this.songs.find(song => (song.title && song.title.toLowerCase().includes(ident.toLowerCase())) || song == ident) : null;
     }
 
     next(number)  //  MOVES THE QUEUE FORWARD BY ONE POSITION UNLESS NUMBER IS PROVIDED, THEN IT WILL SKIP NUMBER SONGS.
@@ -124,19 +124,8 @@ module.exports = class Queue
     remove(song, amount)    //  SONG CAN BE A VIDEO OR A STRING THAT IDENTIFIES THE VIDEO (TITLE)
     {                       //  OR AN ARRAY INDEX.  IF SONG IS AN ARRAY INDEX AND AMOUNT IS SET, THEN THE AMOUNT OF SONGS WILL BE REMOVED STARTING AT SONGS[SONG]
         let songs = this.songs.splice(1,this.songs.length-1);
-        let removed;
-        let findSong = this.findSong;
-        if(song instanceof Video && songs.find(s => s == song))
-            removed = songs.splice(songs.lastIndexOf(song), 1);
-        else if(isNaN(song)) //IF SONG IS NOT A NUMBER (PROBABLY A STRING)
-            removed = songs.splice(songs.lastIndexOf(findSong(song)),1);
-        else
-        {
-            if(amount && !isNaN(amount))
-                removed = this.songs.splice(this.index+song, amount);
-            else
-                removed = this.songs.splice(this.index+song, 1);
-        }
+        song = this.find(song);
+        let removed = song ? songs.splice(songs.indexOf(song), (amount || 1)) : null;
         this.songs = [this.current].concat(songs);
         return removed && removed.length ? removed : null; 
     }
