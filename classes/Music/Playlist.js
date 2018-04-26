@@ -9,6 +9,7 @@ module.exports = class Playlist{
 
     constructor(guild){
         this.guild = guild;
+        this.client = guild.client;
         auth = guild.client.auth;
         this.auth = auth;
         this.dontRelate = [];

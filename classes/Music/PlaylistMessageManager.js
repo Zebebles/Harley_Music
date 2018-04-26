@@ -88,7 +88,7 @@ module.exports = class PlaylistMessageManager
         this.updateEmbed();
 
         if(!this.textChannel || !this.playlist.guild.channels.find(ch => ch.id == this.textChannel.id))
-            this.textChannel = this.playlist.guild.defaultTextChannel;
+            this.textChannel = this.playlist.client.getDefaultChannel(this.playlist.guild);
         
         if(!this.message)
         {
