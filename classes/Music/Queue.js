@@ -126,7 +126,7 @@ module.exports = class Queue
                          //  OR AN ARRAY INDEX.  IF SONG IS AN ARRAY INDEX AND AMOUNT IS SET, THEN THE AMOUNT OF SONGS WILL BE REMOVED STARTING AT SONGS[SONG]
         let songs = this.songs.slice(this.index+1, this.songs.length);
         let removed;
-        if(song instanceof "string" && song.match(/\d+-\d+/g))
+        if(typeof song == "string" && song.match(/\d+-\d+/g))
         {
             let start = songs.match(/\d+/g)[0];
             let amount = start-songs.match(/\d+/g)[1];
