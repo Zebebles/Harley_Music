@@ -24,7 +24,6 @@ module.exports = class Queue extends DBF.Command{
         let validation = msg.guild.playlist.validateCommand(msg,true);
         if(validation)
             return msg.channel.send(validation).catch(err => console.log(err));
-        
         let page;
         if(args) page = parseInt(args);
         if(!page || isNaN(page)) page = 1;
@@ -80,7 +79,7 @@ module.exports = class Queue extends DBF.Command{
             let message = "";
             let done = false;
             let ind = 0;
-            for(let i = 1+(5*page); i < 6+(5*page) && i < playlist.queue.left+1; i++){
+            for(let i = 1+(5*page); i < 6+(5*page) && i < playlist.queue.left; i++){
                 ind++;
                 message += "\n**" + i + "**\t-\t`" + playlist.queue.songAt(i).title + "`";
             }
