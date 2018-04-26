@@ -133,7 +133,10 @@ module.exports = class Queue
             removed = songs.splice(start, amount);
         }
         else
-            removed = songs.splice(songs.lastIndexOf(this.find(song)), 1);
+        {
+            removed = songs.lastIndexOf(this.find(song));
+            removed = removed != null ? songs.splice(removed,1) : null;
+        }
         if(removed)
         {
             this.songs = this.songs.slice(0,this.index+1).concat(songs);

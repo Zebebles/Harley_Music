@@ -28,7 +28,7 @@ module.exports = class Remove extends DBF.Command{
 
         let removed = playlist.queue.remove(args)
 
-        if(!removed)
+        if(!removed || !removed.length)
             return msg.channel.send("Couldn't find a track to remove under `" + args.substr(0, 100) + "`").catch(err => console.log(err));
 
         msg.channel.send("", {embed: new Discord.MessageEmbed({  title: "Track removed from queue",  color: msg.guild.me.displayColor,
