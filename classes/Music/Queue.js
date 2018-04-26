@@ -5,7 +5,7 @@ module.exports = class Queue
     constructor(playlist)
     {
         this.playlist = playlist;
-        this.songs = ["filler"];
+        this.songs = [];
         this.index = -1;
         this.loop = 0;
     }
@@ -17,7 +17,7 @@ module.exports = class Queue
 
     get empty() //  RETURNS A BOOLEAN THAT SIGNIFIES IF THE QUEUE IS EMPTY OR NOT.
     {
-        return (this.songs.length == 0 || this.songs[0] == "filler" || this.left == 0 || this.index >= this.songs.length) ? true : false;
+        return (this.songs.length == 0 || this.left < 0 || this.index >= this.songs.length) ? true : false;
     }
 
     get length()
@@ -103,7 +103,7 @@ module.exports = class Queue
 
     clear() //  REMOVES ALL THE SONGS FROM THE QUEUE
     {
-        this.songs = ["filler"];
+        this.songs = [];
         this.index = -1;
         this.loop = 0;
     }
