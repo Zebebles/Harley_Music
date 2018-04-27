@@ -106,7 +106,7 @@ module.exports = class Playlist{
             if(this.timeout)
                 clearTimeout(this.timeout);
             return this.timeout = setTimeout(() => {
-                if((this.dispatcher && this.dispatcher.paused) && this.guild.voiceConnection && this.guild.voiceConnection.channel.members.size == 1)
+                if((!this.dispatcher || this.dispatcher.paused) && this.guild.voiceConnection && this.guild.voiceConnection.channel.members.size == 1)
                     this.stop("Voice Channel empty for 15 minutes");
             },900000);
         }
