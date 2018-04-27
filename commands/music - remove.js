@@ -30,10 +30,12 @@ module.exports = class Remove extends DBF.Command{
 
         if(!removed || !removed.length)
             return msg.channel.send("Couldn't find a track to remove under `" + args.substr(0, 100) + "`").catch(err => console.log(err));
-
-        msg.channel.send("", {embed: new Discord.MessageEmbed({  title: "Track removed from queue",  color: msg.guild.me.displayColor,
-                                description: removed[0].title}).setThumbnail(removed[0].image)})
-                        .catch(err => console.log(err));
+        if(removed.length == 1)
+            msg.channel.send("", {embed: new Discord.MessageEmbed({  title: "Track removed from queue",  color: msg.guild.me.displayColor,
+                                    description: removed[0].title}).setThumbnail(removed[0].image)})
+                            .catch(err => console.log(err));
+        else
+            msg.channel.send(`Removed \`${removed.length}\` songs from the queue.`);
         
     }
 }
