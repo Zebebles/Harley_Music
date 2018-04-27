@@ -130,7 +130,6 @@ module.exports = class Queue
         {
             let start = parseInt(song.match(/\d+/g)[0])-1;
             let amount = parseInt(song.match(/\d+/g)[1]) - start;
-            console.log("Range: " + start + " - " + amount);
             removed = songs.splice(start, amount);
         }
         else
