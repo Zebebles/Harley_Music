@@ -117,7 +117,7 @@ module.exports = class Playlist{
                 if(this.guild.me.voiceChannel)
                     this.guild.me.voiceChannel.join()
                         .then(() => this.play())
-                        .catch(err => this.stop("Voice connection error.", stop));
+                        .catch(err => this.stop("Voice connection error.",err));
                 else
                     this.stop("Voice connection error.");
             }
