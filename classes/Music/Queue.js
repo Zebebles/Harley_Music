@@ -12,12 +12,12 @@ module.exports = class Queue
 
     get current()
     {
-        return this.songs.length && this.index != -1 ? this.songs[this.index] : null;
+        return this.songs.length && this.index != -1 && this.index < this.songs.length ? this.songs[this.index] : null;
     }
 
     get empty() //  RETURNS A BOOLEAN THAT SIGNIFIES IF THE QUEUE IS EMPTY OR NOT.
     {
-        return (this.songs.length == 0 || this.left < 0 || this.index >= this.songs.length) ? true : false;
+        return (!this.current || !(this.current instanceof Video)) ? true : false;
     }
 
     get length()
