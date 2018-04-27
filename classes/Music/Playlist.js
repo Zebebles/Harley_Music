@@ -53,8 +53,14 @@ module.exports = class Playlist{
                         setTimeout( () => {
                             if(conn.dispatcher)
                             {
-                                conn.dispatcher.pause();
-                                setTimeout(() => conn.dispatcher.resume(),50);
+                                try
+                                {
+                                    conn.dispatcher.pause();
+                                    setTimeout(() => conn.dispatcher.resume(),50);
+                                }catch(e)
+                                {
+                                    this.handleError(e);
+                                }
                             }
                         },250);
                     }
@@ -151,10 +157,16 @@ module.exports = class Playlist{
     {
         if(!this.dispatcher)
             return;
-        if(this.dispatcher.paused)
-            this.dispatcher.resume();
-        else
-            this.dispatcher.pause();
+        try
+        {
+            if(this.dispatcher.paused)
+                this.dispatcher.resume();
+            else
+                this.dispatcher.pause();
+        }catch(err)
+        {
+            return this.handleError(err);
+        }
 
         this.messageManager.update();
     }

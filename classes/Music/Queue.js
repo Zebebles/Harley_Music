@@ -124,7 +124,7 @@ module.exports = class Queue
 
     remove(song)    //  SONG CAN BE A VIDEO OR A STRING THAT IDENTIFIES THE VIDEO (TITLE)
     {               //  OR AN ARRAY INDEX OR A RANGE OF INDEXES I.E. 1-3
-        let songs = this.songs.slice(this.index+1, this.songs.length);
+        let songs = this.songs.slice(this.index+1);
         let removed;
         if(typeof song == "string" && song.match(/\d+-\d+/g))
         {
