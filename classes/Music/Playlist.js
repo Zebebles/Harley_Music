@@ -100,7 +100,8 @@ module.exports = class Playlist{
         if(this.queue.empty)//STOP THE PLAYBACK
             return this.stop("Ran of out songs to play.");
         if(this.dispatcher)
-            this.dispatcher.destroy();
+            this.dispatcher.removeAllListeners()
+                           .destroy();
         if(this.guild.voiceConnection && this.guild.voiceConnection.channel.members.size == 1)
         {
             this.messageManager.textChannel.send("Looks like the voice channel is empty :c.  Pausing playback for now, you can resume it with `" + this.guild.prefix + "resume`");
