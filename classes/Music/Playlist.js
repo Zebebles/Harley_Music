@@ -73,7 +73,8 @@ module.exports = class Playlist{
 
     handleError(error)
     {
-        console.log(error);
+        if(error)
+            console.log(error);
         this.next();
     }
 
@@ -156,7 +157,7 @@ module.exports = class Playlist{
     pause()
     {
         if(!this.dispatcher)
-            return;
+            return this.next();
         try
         {
             if(this.dispatcher.paused)
@@ -165,7 +166,7 @@ module.exports = class Playlist{
                 this.dispatcher.pause();
         }catch(err)
         {
-            return this.handleError(err);
+            return this.handleError();
         }
 
         this.messageManager.update();
