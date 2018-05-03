@@ -39,8 +39,8 @@ function connect()
     socket.on('restart', () => 
     {
         console.log("Harley restarted via API endpoint.");
-        harley.stop();
-        setTimeout(() =>process.exit(1));
+        harley.kill(true);
+        setTimeout(() =>process.exit(1),100);
     });
     
     socket.on('stop', () => {
