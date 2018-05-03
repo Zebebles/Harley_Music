@@ -47,44 +47,6 @@ class myClient extends DBF.Client {
             return guild.channels.filter(ch => ch.type == "text" && ch.permissionsFor(guild.me).has("SEND_MESSAGES") && ch.permissionsFor(guild.defaultRole).has("SEND_MESSAGES")).sort((a,b) => a.position-b.position).first();
     }
 
-    sendStatus(extended){
-        let status = {
-            status: this.user.presence.status,
-            guilds: this.guilds.size,
-            connections: this.voiceConnections.size,
-            connlist: []
-        };
-        if(extended)
-            this.voiceConnections.forEach(conn => 
-                status.connlist.push({
-                    id: conn.channel.guild.id,
-                    guild: conn.channel.guild.name,
-                    length: conn.channel.guild.playlist.queue.left,
-                    members: conn.channel.members.size
-                }));
-        snekfetch.post(this.auth.webserver + "/servers/status")
-                .send({status})
-                .end()
-                .catch(err => {
-                    console.log("ERROR SENDING STATUS\n<br/>"+err);
-                });
-        return status;
-    }
-
-    register(){
-        return new Promise((resolve, reject) => {
-            snekfetch.get(auth.webserver+"/servers/register?pw=" + auth.password).then(response => {
-                if(response.status != 200)
-                    return console.log("Error re-registering server");
-                snekfetch.get(auth.webserver + "/servers/auth").then(authResponse => {
-                    if(authResponse.status != 200)
-                        return console.log("Error fetching auth.");
-                    this.auth = JSON.parse(authResponse.text);
-                }).catch(err => console.log("Error Authorising)"));
-            }).catch(err => console.log("Error Registering server"));
-        })
-    }
-
     loadUsers(client){
         var conn = mysql.createConnection({
             host: this.auth.sqlServer,
