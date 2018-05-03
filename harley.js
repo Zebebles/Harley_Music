@@ -4,7 +4,7 @@ const Playlist = require("./classes/Music/Playlist.js");
 const SocketManager = require("./classes/Socket/SocketManager.js");
 const Discord = require("discord.js");
 
-let socketManager = new SocketManager('https://www.harleybot.me:8443/server/bot?password=' + auth.password);
+let socketManager = new SocketManager('https://www.harleybot.me:8443/server/bot?type=music&password=' + auth.password);
 
 socketManager.connect().then(auth => 
 {   
@@ -18,7 +18,7 @@ socketManager.connect().then(auth =>
     bot.auth = auth;
     bot.socketManager = socketManager;
     bot.socketManager.client = bot;
-    
+
     bot.on("missingPermissions", data => {
         if(data.bot)
             data.message.channel.send("I need permission `" + data.permissions[0] + "` to be able to that.");
