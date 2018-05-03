@@ -68,7 +68,7 @@ module.exports = class Playlist{
             });
         }
 
-        this.guild.client.sendStatus(true);
+        this.guild.client.socketManager.sendStatus(true);
     }
 
     handleError(error)
@@ -95,7 +95,7 @@ module.exports = class Playlist{
 
     next()
     {
-        this.guild.client.sendStatus(true);
+        this.guild.client.socketManager.sendStatus(true);
         this.queue.next();
         if(this.queue.empty)//STOP THE PLAYBACK
             return this.stop("Ran of out songs to play.");
