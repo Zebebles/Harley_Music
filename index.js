@@ -36,15 +36,11 @@ function connect()
 {
     socket = io.connect('https://www.harleybot.me:8443/server/parent?type=music&password=' + auth.password);
     
-    socket.on('restart', hard => {
-        if(hard)
-        {
-            harley.stop();
-            setTimeout(process.exit, 100);
-        }
-        else
-            harley.restart();
+    socket.on('restart', () => 
+    {
         console.log("Harley restarted via API endpoint.");
+        harley.stop();
+        setTimeout(() =>process.exit(1));
     });
     
     socket.on('stop', () => {
