@@ -1,9 +1,7 @@
 const myClient = require("./classes/client.js");
 let auth = require("./resources/auth.json");
 const Playlist = require("./classes/Music/Playlist.js");
-let snekfetch = require("snekfetch");
-const fs = require('fs');
-const express = require("express");
+const SocketManager = require("./classes/Socket/SocketManager.js");
 const Discord = require("discord.js");
 
 let socketManager = new SocketManager('https://www.harleybot.me:8443/server/bot?password=' + auth.password);
@@ -18,6 +16,8 @@ socketManager.connect().then(auth =>
         MentionsTrigger: true
     });
     bot.auth = auth;
+    bot.socketManager = socketManager;
+    bot.socketManager.client = bot;
     
     bot.on("missingPermissions", data => {
         if(data.bot)
