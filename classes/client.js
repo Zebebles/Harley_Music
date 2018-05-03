@@ -85,7 +85,7 @@ class myClient extends DBF.Client {
         })
     }
 
-    loadUsers(){
+    loadUsers(client){
         var conn = mysql.createConnection({
             host: this.auth.sqlServer,
             user: "root",
@@ -95,8 +95,8 @@ class myClient extends DBF.Client {
         conn.connect(function(err) {
             if(err)
                 return console.log(err);
-            loadUsersDB(conn, this.client).then(conn => {
-                console.log("Successfully loaded " + this.client.users.size + " users.");
+            loadUsersDB(conn, client).then(conn => {
+                console.log("Successfully loaded " + client.users.size + " users.");
             }).finally(() => {
                 conn.end();
             }).catch(err => console.log("Error loading users.\n" + err));
