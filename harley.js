@@ -4,7 +4,7 @@ const Playlist = require("./classes/Music/Playlist.js");
 const SocketManager = require("./classes/Socket/SocketManager.js");
 const Discord = require("discord.js");
 
-let socketManager = new SocketManager('https://www.harleybot.me:8443/server/bot?type=music&password=' + auth.password);
+let socketManager = new SocketManager('https://www.harleybot.me:8443/server/bot?password=' + auth.password);
 
 socketManager.connect().then(auth => 
 {   
