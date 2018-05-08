@@ -95,8 +95,8 @@ module.exports = class Playlist{
 
     next()
     {
-        this.guild.client.socketManager.sendStatus(true);
         this.queue.next();
+        this.client.socketManager.sendStatus(true);        
         if(this.queue.empty)//STOP THE PLAYBACK
             return this.stop("Ran of out songs to play.");
         if(this.dispatcher)
