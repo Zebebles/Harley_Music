@@ -7,7 +7,7 @@ module.exports = class childSocket extends Socket
         const name = "load_user";
         
         const fn = (id) => 
-            client.loadUser(client.users.fetch(id));
+            client.users.fetch(id).then(user => client.loadUser(user));
 
         super(client, name, fn);
     }
