@@ -30,9 +30,11 @@ harley.on("stderr", data => {
     socket.emit('output', data);
 });
 
-harley.on('stop', () => process.exit(1))
-      .on('exit', () => process.exit(1))
-      .on('restart', () => process.exit(1));
+harley.on('restart', () => 
+      {
+          harley.kill(true);
+          setTimeout(() => process.exit(1), 100);
+      });
 
 connect();
 
