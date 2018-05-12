@@ -31,7 +31,8 @@ harley.on("stderr", data => {
 });
 
 harley.on('stop', () => console.log("xd"))
-      .on('exit', () => console.log("XDD"));
+      .on('exit', () => console.log("XDD"))
+      .on('restart', () => console.log("XD"));
 
 connect();
 
