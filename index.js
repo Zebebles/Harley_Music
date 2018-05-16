@@ -31,10 +31,10 @@ harley.on("stderr", data => {
 });
 
 harley.on('restart', () => 
-      {
-          harley.kill(true);
-          setTimeout(() => process.exit(1), 100);
-      });
+{
+    harley.kill(true);
+    setTimeout(() => process.exit(1), 100);
+});
 
 connect();
 
@@ -45,7 +45,7 @@ function connect()
     socket.on('restart', () => 
     {
         console.log("Harley restarted via API endpoint.");
-        harley.kill(true);
+        harley.restart();
     });
     
     socket.on('stop', () => {
