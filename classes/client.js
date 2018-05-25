@@ -14,11 +14,7 @@ class myClient extends DBF.Client {
 
         this.on("guildCreate", guild => 
         {
-            guild.defaultTextChannel = this.getDefaultChannel(guild);
-            guild.prefix = this.prefix;
-            guild.playlist = new Playlist(guild);
-            guild.disabledCommands = new Array();
-            guild.channels.filter(ch => ch.type == "text").forEach(ch => ch.disabledCommands = new Array());
+            this.loadGuilds([guild]);
             this.socketManager.sendStatus(true);   
             this.loadUsers(this);
         });
