@@ -21,7 +21,7 @@ class myClient extends DBF.Client {
 
         this.on("channelCreate", channel => 
         {
-            channel.disabledCommands = new Array();
+            channel.disabledCommands = [];
         });
 
         this.on("guildDelete", guild => 
