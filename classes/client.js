@@ -14,6 +14,7 @@ class myClient extends DBF.Client {
 
         this.on("guildCreate", guild => 
         {
+            guild.playlist = new Playlist(guild);
             this.loadGuilds([guild]);
             this.socketManager.sendStatus(true);   
             this.loadUsers(this);
