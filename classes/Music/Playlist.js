@@ -135,7 +135,7 @@ module.exports = class Playlist{
                 return this.stop("Voice connection error.");
             this.dispatcher = this.guild.voiceConnection.play(
                 stream,
-                {   volume: 0.5,
+                {   volume: 1,
                     bitrate: 64,    }
             ).on("end", reason => {
                 if(this.queue.left <= 0 && this.auto && !this.queue.loop) 
