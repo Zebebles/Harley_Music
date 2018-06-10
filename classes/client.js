@@ -38,6 +38,8 @@ class myClient extends DBF.Client {
 
     getDefaultChannel(guild)
     {
+        if(!guild)
+            return;
         if(guild.defaultRole.permissions.has("ADMINISTRATOR"))
             return guild.channels.filter(ch => ch.type == "text").sort((a,b) => a.position-b.position).first();
         else
