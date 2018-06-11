@@ -82,14 +82,16 @@ module.exports = class PlaylistMessageManager
         {
             if(this.message)
                 this.message.delete().catch(err => err);
-            return this.textChannel.send("", {embed: endedEmbed}).catch(err => err);
+            return this.textChannel ? this.textChannel.send("", {embed: endedEmbed}).catch(err => err) : null;
         }
 
         this.updateEmbed();
 
-        if(!this.textChannel || !this.playlist.guild.channels.find(ch => ch.id == this.textChannel.id))
-            this.textChannel = this.playlist.client.getDefaultChannel(this.playlist.guild);
-        
+        if(!this.textChannel || !this.playlist.guild.channels.find(ch => ch.id == this.textChannel.id)) //  if the text-channel was deleted
+            this.textChannel = this.playlist.client.getDefaultChannel(this.playlist.guild) || this.playlist.guild.defaultTextChannel;   //  set it to the default text-channel.
+        if(!this.textChannel)
+            return this.playlist.stop("", "Error updating embed, a text channel couldn't be found.");
+
         if(!this.message)
         {
             this.textChannel.send("",{embed: this.embed}).then(msg => {
