@@ -136,7 +136,7 @@ module.exports = class PlaylistMessageManager
         else
             msg.channel.send("", {embed}).then(m => this.queueMessage = null);
         
-        this.textChannel = mssg.channel;
+        this.textChannel = msg.channel;
     }
 
     getDurationString(time)
