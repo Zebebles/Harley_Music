@@ -67,7 +67,7 @@ module.exports = class PlaylistMessageManager
                 }) : null;
             }) : null;
         }).catch(error => 
-            this.message.reactions.removeAll().catch((err) => err));
+            this.message ? this.message.reactions.removeAll().catch((err) => err) : null);
         
     }
 
