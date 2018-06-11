@@ -55,15 +55,20 @@ module.exports = class PlaylistMessageManager
 
     addReactions()
     {
-        this.message ? this.message.react(this.reactions[0].emoji).catch(e => e).then(() => {
-            this.message ? this.message.react(this.reactions[1].emoji).catch(e => e).then(() => {
-                this.message ? this.message.react(this.reactions[2].emoji).catch(e => e).then(() => {
-                    this.message ? this.message.react(this.reactions[3].emoji).catch(e => e).then(() => {
-                        this.message ? this.message.react(this.reactions[4].emoji).catch(e => e) : null;
+        new Promise((resolve, reject) => 
+        {
+            this.message ? this.message.react(this.reactions[0].emoji).catch(e => reject(e)).then(() => {
+                this.message ? this.message.react(this.reactions[1].emoji).catch(e => reject(e)).then(() => {
+                    this.message ? this.message.react(this.reactions[2].emoji).catch(e => reject(e)).then(() => {
+                        this.message ? this.message.react(this.reactions[3].emoji).catch(e => reject(e)).then(() => {
+                            this.message ? this.message.react(this.reactions[4].emoji).catch(e => reject(e)).then(() => resolve()) : null;
+                        }) : null;
                     }) : null;
                 }) : null;
             }) : null;
-        }) : null;
+        }).catch(error => 
+            this.message.reactions.removeAll().catch((err) => err));
+        
     }
 
     updateEmbed()
@@ -130,6 +135,8 @@ module.exports = class PlaylistMessageManager
             this.queueMessage.edit("", {embed}).then(m => this.queueMessage = null);
         else
             msg.channel.send("", {embed}).then(m => this.queueMessage = null);
+        
+        this.textChannel = mssg.channel;
     }
 
     getDurationString(time)

@@ -100,7 +100,6 @@ module.exports = class Hello extends DBF.Command{
         */
         function finish(song)
         {
-            msg.guild.playlist.messageManager.textChannel = msg.channel;
             msg.guild.playlist.messageManager.sendQueueMessage(msg, song); //send the "song is queued message"
                 
             if(shuffle)
